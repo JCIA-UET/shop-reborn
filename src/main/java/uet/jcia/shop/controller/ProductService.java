@@ -60,6 +60,24 @@ public class ProductService extends HttpServlet {
 				return ;
 				
 			}
+			
+		}
+		// get product by id
+		else if (action.equalsIgnoreCase("gpbyid")) {
+			try {
+				String pIdStr = req.getParameter("productid");
+				int pId = Integer.parseInt(pIdStr);
+				Product p = (Product) pm.getItemById(pId);
+				
+				req.setAttribute("product", p);
+				destination = "/product.jsp";
+				
+			} catch (Exception e) {
+				req.setAttribute("message", "Cannot get product");
+				forwardStream(req, rsp, destination);
+				return ;
+				
+			}
 		}
 		
 		forwardStream(req, rsp, destination);

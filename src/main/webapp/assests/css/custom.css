@@ -1,7 +1,8 @@
 .container {
 }
 body {
-    background-image: url("../../img/background.jpg");
+    /* background-image: url("../../img/background.jpg"); */
+    background-color: #eee;
 }
 .logo {
 	padding-top: 55px;
@@ -23,63 +24,14 @@ body {
 	display: inline;
 }
 
-.footer-site{
-background: url("../../img/footer.png") repeat;
+#footer {
+  background-color: rgb(231, 231, 231);
+  height: 100px;
 }
-.footer-site .footer{
-padding-left: 3.75rem;
-color:#aeaeae;
-padding-top: 1.875rem;
-width: 100%;
-float: left;
-padding-bottom: 35px;
-}
-.footer-site .footer h5{
-font-size: 21px;
-}
-.footer-site .footer .list_menu{
-list-style: none;
-padding-left: 0px;
-margin-bottom: 0px;
-}
-.footer-site .footer .list_menu li{
-list-style: none;
-}
-.footer-site .footer .list_menu li a{
-color: #8b8b8b;
-}
-.footer-site .footer .social ul{
-padding-left: 0px;
-}
-.footer-site .footer .social ul li{
-background: black ;
-border-radius: 100%;
-float: left;
-height: 54px;
-width: 54px;
-list-style: none outside none;
-}
-.footer-site .footer .social ul li a{
-text-align: center;
-vertical-align: middle;
-line-height: 52px;
-font-size: 26px;
-display: block;
-color:black;
-}
-.footer-site .footer .social ul li.twitter{
-margin-left: 24px;
-margin-right: 12px;
-}
-.footer-site .footer .social ul li.dribbble{
-margin-left: 12px;
-margin-right: 24px;
-}
-.footer-site .footer .social ul li a span{
-display: none;
-}
-.footer-site .footer .coppyright{
-padding-top: 30px;
+
+#footer p {
+	font-size: 16px;
+	line-height: 80px;
 }
 
 /*for product list grip*/
@@ -91,6 +43,7 @@ padding-top: 30px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
+    width: 100%;
 }
 
 .item.list-group-item
@@ -117,6 +70,7 @@ padding-top: 30px;
 {
     padding: 9px 9px 0px 9px;
 }
+
 .item.list-group-item:nth-of-type(odd)
 {
     background: #eeeeee;
@@ -285,3 +239,16 @@ ul.dropdown-cart li .item-right button{
 	font-size: 27px;
 }
 /*end search box*/
+
+/*product view*/
+.add-to-cart .btn-qty {
+  width: 52px;
+  height: 46px;
+}
+.product-price {
+	color: #ff0000;
+}
+.product-description {
+	margin-top: 20px;
+}
+/*end product view*/
