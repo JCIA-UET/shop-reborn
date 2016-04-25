@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>JCIA Shop</title>
+	<title>JCIA Shop - ${categoryName}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +35,7 @@
 	    <div id="categories-list" class="row list-group">
 	    	<c:if test="${not empty products}">
 	    		<c:forEach var="p" items="${products}">
-	    			<div class="item  col-xs-4 col-lg-4">
+	    			<div class="item col-md-3">
 	    				<div class="thumbnail">
 	    					<img class="group list-group-image" src="${p.imageLink}" alt="" />
 	    					<div class="caption">
@@ -50,9 +51,13 @@
 			                    <div class="row">
 			                        <div class="col-xs-12 col-md-6">
 			                            <p class="lead">
-			                                ${p.price} VND</p>
+			                            	<fmt:formatNumber type="currency" value="${p.price}">
+			                            	</fmt:formatNumber> 
+			                            </p>
 			                        </div>
-			                        <div class="col-xs-12 col-md-6">
+			                    </div>
+			                    <div class="row">
+			                    	<div class="col-xs-12 col-md-6">
 			                            <a class="btn btn-success" href="#">Add to cart</a>
 			                        </div>
 			                    </div>

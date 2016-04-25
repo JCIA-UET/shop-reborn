@@ -41,7 +41,7 @@ public class ProductService extends HttpServlet {
 		String destination = "/category.jsp";
 		
 		// get products by category id
-		if (true) {
+		if (action.equalsIgnoreCase("gpbyid")) {
 			try {
 				String categoryIdStr = req.getParameter("categoryid");
 				int categoryId = Integer.parseInt(categoryIdStr);
@@ -56,6 +56,24 @@ public class ProductService extends HttpServlet {
 				
 			} catch (Exception e) {
 				req.setAttribute("message", "Cannot get products");
+				forwardStream(req, rsp, destination);
+				return ;
+				
+			}
+			
+		}
+		// get product by id
+		else if (action.equalsIgnoreCase("gpbyid")) {
+			try {
+				String pIdStr = req.getParameter("productid");
+				int pId = Integer.parseInt(pIdStr);
+				Product p = (Product) pm.getItemById(pId);
+				
+				req.setAttribute("product", p);
+				destination = "/product.jsp";
+				
+			} catch (Exception e) {
+				req.setAttribute("message", "Cannot get product");
 				forwardStream(req, rsp, destination);
 				return ;
 				
