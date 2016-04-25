@@ -37,11 +37,11 @@ public class ProductService extends HttpServlet {
 			return ;
 		}
 		
-		String message = null;
+		//String message = null;
 		String destination = "/category.jsp";
 		
 		// get products by category id
-		if (action.equalsIgnoreCase("gpbycid")) {
+		if (true) {
 			try {
 				String categoryIdStr = req.getParameter("categoryid");
 				int categoryId = Integer.parseInt(categoryIdStr);
