@@ -27,8 +27,12 @@ public class ProductService extends HttpServlet {
     
     public ProductService() {
         super();
-        
-        pm = new ProductManager();
+    }
+    
+    @Override
+    public void init() throws ServletException {
+    	super.init();
+    	pm = new ProductManager();
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse rsp) throws ServletException, IOException {
@@ -38,7 +42,7 @@ public class ProductService extends HttpServlet {
 			return ;
 		}
 		
-		String destination = "/category.jsp";
+		String destination = null;
 		
 		// get products by category id
 		if (action.equalsIgnoreCase("gpbycid")) {
