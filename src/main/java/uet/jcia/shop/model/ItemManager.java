@@ -48,4 +48,11 @@ public interface ItemManager {
 	 * @return item id if success, -1 if fail
 	 */
 	int addItem(Item newItem);
+	
+	/**
+	 * search items which match input name from user
+	 * @param name the input
+	 * @return list of items
+	 */
+	List<Item> searchItemByName(String name);
 }

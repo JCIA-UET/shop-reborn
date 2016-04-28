@@ -209,4 +209,10 @@ public class CategoryManager implements ItemManager {
 
 	}
 
+	@Override
+	public List<Item> searchItemByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

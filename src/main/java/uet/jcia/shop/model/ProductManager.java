@@ -261,4 +261,41 @@ public class ProductManager implements ItemManager {
 			
 		}
 	}
+	
+	@Override
+	public List<Item> searchItemByName(String inputName) {
+		List<Item> products = new ArrayList<>();
+		Item product = null;
+		
+		try {
+			con = dbConnector.createConnection();
+			Statement statement = con.createStatement();
+			String query = "select * from product";
+			ResultSet rs = statement.executeQuery(query);
+		
+			while (rs.next()) {
+				
+				String name = rs.getString(2);
+				if (name.toLowerCase().contains(inputName.toLowerCase())) {
+					int productId = rs.getInt(1);
+					double price = rs.getDouble(3);
+					int quantity = rs.getInt(4);
+					int categoryId = rs.getInt(5);
+					String description = rs.getString(6);
+					String imgLink = rs.getString(7);
+					
+					product = new Product(productId, name, quantity, price,
+							categoryId, description, imgLink);
+					products.add(product);
+				}
+			}
+			
+			con.close();
+			return products;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
 }
