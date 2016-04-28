@@ -46,6 +46,10 @@ body {
     width: 100%;
 }
 
+.item a {
+	text-decoration: none;
+}
+
 .item.list-group-item
 {
     float: none;
