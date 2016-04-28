@@ -1,13 +1,6 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html >
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-=======
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +8,6 @@
 <html>
 <head>
 	<title>JCIA Shop</title>
->>>>>>> 29d73621ac705e7737eae8f41966903a50cc5890
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,15 +16,6 @@
     
     <!-- custom style -->
 	<link href="assests/css/custom.css" rel="stylesheet"/>
-<<<<<<< HEAD
-<title>Trang chủ</title>
-</head>
-<body>
-	<jsp:include page="header.jsp"></jsp:include>
-	<jsp:include page="footer.jsp"></jsp:include>
-</body>
-</html>
-=======
 </head>
 <body>
 	
@@ -90,4 +73,3 @@
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>    
->>>>>>> 29d73621ac705e7737eae8f41966903a50cc5890

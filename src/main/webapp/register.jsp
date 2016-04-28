@@ -18,67 +18,109 @@
 </head>
 <body>
 	
-	<!-- header -->
-	<jsp:include page="header.jsp"></jsp:include>
 	
 	<!-- content -->
 	<div class="container">
 	    <div class="well col-md-6">
 	    	<h2>Account Register</h2>
-	    	<form action="AccountService" method="post" class="form-horizontal">
+	    	<form action="AccountService" method="post" class="form-horizontal" id="myForm">
 	    		<legend>Personal Details</legend>
+	    		 <div class="alert alert-danger" style="display: none" id="alert-usernamefail">
+	   				  The username really existed ! 
+ 				</div>
 	    		<div class="form-group required">
 		            <label class="col-sm-2 control-label" for="realname">Full Name</label>
 		            <div class="col-sm-10">
-		                <input name="fullname" placeholder="Full Name" id="realname" class="form-control" type="text">
+		                <input name="fullname" placeholder="Full Name" id="realname" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
 		            <label class="col-sm-2 control-label" for="phonenumber">Phone number</label>
 		            <div class="col-sm-10">
-		                <input name="phonenumber" placeholder="Phone number" id="phonenumber" class="form-control" type="text">
+		                <input name="phonenumber" placeholder="Phone number" id="phonenumber" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <legend>Address</legend>
                 <div class="form-group">
 		            <label class="col-sm-2 control-label" for="city">City</label>
 		            <div class="col-sm-10">
-		                <input name="city" placeholder="City" id="city" class="form-control" type="text">
+		                <input name="city" placeholder="City" id="city" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
 		            <label class="col-sm-2 control-label" for="address">Address</label>
 		            <div class="col-sm-10">
-		                <input name="address" placeholder="Address" id="address" class="form-control" type="text">
+		                <input name="address" placeholder="Address" id="address" class="form-control" type="text" required="required">
             		</div>
                 </div>
 	    		<legend>Account</legend>
 	    		<div class="form-group required">
 		            <label class="col-sm-2 control-label" for="address">Username</label>
 		            <div class="col-sm-10">
-		                <input name="username" placeholder="Username" id="username" class="form-control" type="text">
+		                <input name="username" placeholder="Username" id="username" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
 		            <label class="col-sm-2 control-label" for="password">Password</label>
 		            <div class="col-sm-10">
-		                <input name="password" placeholder="Password" id="password" class="form-control" type="text">
+		                <input name="password" placeholder="Password" id="password" class="form-control" type="password"  required="required">
             		</div>
                 </div>
                 <div class="form-group required">
 		            <label class="col-sm-2 control-label" for="re-password">Re-type Password</label>
 		            <div class="col-sm-10">
-		                <input name="re-password" placeholder="Re-type Password" id="re-password" class="form-control" type="text">
+		                <input name="re-password" placeholder="Re-type Password" id="re-password" class="form-control" type="password" required="required">
             		</div>
+            		
                 </div>
-                <legend></legend>
-                <input value="Register" class="btn btn-primary pull-right" type="submit">
+                <div class="alert alert-danger" style="display: none" id="alert-notmatch">
+	   				  Re-Password not match!
+ 				    </div>
+                <input type="hidden" name="action" value="register" >
+                <input value="Register" class="btn btn-primary pull-left" type="button" onclick="check()">
+                <a class="btn btn-danger" href="login.jsp" role="button">Cancel</a>
 	    	</form>
 	    </div>
 	</div>
-		
 	
-	<!-- footer -->
-	<jsp:include page="footer.jsp"></jsp:include>
+	<script type="text/javascript">
+		function check(){
+			var x = document.getElementById("password").value;
+			var y = document.getElementById("re-password").value;
+			if(x!=y) {
+				document.getElementById("alert-notmatch").style.display= "block";
+			}
+			else {
+				document.getElementById("myForm").submit();
+			}
+		}
+		function mobilenumber() {
+	       if(document.getElementById('phonenumber').value != ""){
+
+	       var y = document.getElementById('phonenumber').value;
+	       if(isNaN(y)||y.indexOf(" ")!=-1)
+	       {
+	          alert("Invalid Mobile No.");
+	          document.getElementById('phonenumber').focus();
+	          return false;
+	       }
+
+	       if (y.length>11 || y.length<10)
+	       {
+	            alert("Mobile No. should be 10 digit");
+	            document.getElementById('phonenumber').focus();
+	            return false;
+	       }
+
+
+	       }
+	    }
+	</script>
+	<c:if test="${message.equals('existed')}">
+		<script type="text/javascript">
+			document.getElementById("alert-usernamefail").style.display="block";
+		</script>
+	</c:if>
+
 </body>
 </html>    

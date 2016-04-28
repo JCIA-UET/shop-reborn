@@ -37,11 +37,11 @@
 					    	<li><a href="#">My Account</a></li>
 					    	<li><a href="#">Order History</a></li>
 						    <li role="separator" class="divider"></li>
-						    <li><a href="#">Logout</a></li>
+						    <li><a href="#" onclick="document.getElementById('logoutform').submit()">Logout</a></li>
 	          			</c:when>
 	          			<c:otherwise>
-	          				<li><a href="#">Register</a></li>
-					    	<li><a href="#">Login</a></li>
+	          				<li><a href="register.jsp">Register</a></li>
+					    	<li><a href="login.jsp">Login</a></li>
 	          			</c:otherwise>
 	          		</c:choose>
           		</ul>
@@ -124,3 +124,7 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
+<form action="AccountService" method="post" id="logoutform">
+	<input type="hidden" name="action" value="logout">
+</form>
+
