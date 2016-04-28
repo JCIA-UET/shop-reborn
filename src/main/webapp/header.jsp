@@ -110,8 +110,12 @@
 				Categories list
 			</span>
 			<ul class="dropdown-menu cate-list">
-			    <c:forEach var="category" items="${sessionScope.categories}">
-			    	<li><a href="#">${category.name}</a></li>
+			    <c:forEach var="category" items="${sessionScope.ss_categories}">
+			    	<li>
+				    	<a href="ProductService?action=gpbycid&categoryid=${category.id}">
+				    		${category.name}
+				    	</a>
+			    	</li>
 			    </c:forEach>
 		  	</ul>
 		</div>
