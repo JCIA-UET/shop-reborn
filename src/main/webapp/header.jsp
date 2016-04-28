@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<c:set var="context" value="${pageContext.servletContext.contextPath}"/>
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -11,7 +13,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">JCIA Shop</a>
+      <a class="navbar-brand" href="${context}">JCIA Shop</a>
       
     </div>
 
@@ -119,8 +121,9 @@
 
 <div id="search">
     <button type="button" class="close">×</button>
-    <form>
-        <input type="search" value="" placeholder="type keyword(s) here" />
+    <form action="ProductService">
+    	<input type="hidden" name="action" value="spbyn"/>
+        <input type="search" name ="productname" value="" placeholder="type product keyword(s) here" />
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>

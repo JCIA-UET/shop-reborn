@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import uet.jcia.shop.model.Category;
 import uet.jcia.shop.model.CategoryManager;
+import uet.jcia.shop.model.Item;
 import uet.jcia.shop.model.Product;
 import uet.jcia.shop.model.ProductManager;
 
@@ -37,11 +38,19 @@ public class ProductService extends HttpServlet {
 			return ;
 		}
 		
+
 		//String message = null;
 		String destination = "/category.jsp";
 		
 		// get products by category id
 		if (action.equalsIgnoreCase("gpbyid")) {
+		 destination = "/category.jsp";
+		
+		// get products by category id
+		if (action.equalsIgnoreCase("gpbycid")) {
+			destination = "/category.jsp";
+			
+
 			try {
 				String categoryIdStr = req.getParameter("categoryid");
 				int categoryId = Integer.parseInt(categoryIdStr);
@@ -64,13 +73,14 @@ public class ProductService extends HttpServlet {
 		}
 		// get product by id
 		else if (action.equalsIgnoreCase("gpbyid")) {
+			destination = "/product.jsp";
+			
 			try {
 				String pIdStr = req.getParameter("productid");
 				int pId = Integer.parseInt(pIdStr);
 				Product p = (Product) pm.getItemById(pId);
 				
 				req.setAttribute("product", p);
-				destination = "/product.jsp";
 				
 			} catch (Exception e) {
 				req.setAttribute("message", "Cannot get product");
@@ -79,10 +89,25 @@ public class ProductService extends HttpServlet {
 				
 			}
 		}
+		// search product by name
+		else if (action.equalsIgnoreCase("spbyn")) {
+			String input = req.getParameter("productname");
+			destination = "/search.jsp";
+			
+			if (input.isEmpty()) {
+				req.setAttribute("message", "you can not leave input empty");
+			
+			} else {
+				List<Item> products = pm.searchItemByName(input);
+				req.setAttribute("products", products);
+			}
+			
+			req.setAttribute("productname", input);
+		}
 		
 		forwardStream(req, rsp, destination);
 	}
-	
+	}
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
 			throws ServletException, IOException {
 		

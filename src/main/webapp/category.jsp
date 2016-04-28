@@ -35,7 +35,8 @@
 	    <div id="categories-list" class="row list-group">
 	    	<c:if test="${not empty products}">
 	    		<c:forEach var="p" items="${products}">
-	    			<div class="item col-md-3">
+	    			<a href="ProductService?action=gpbyid&productid=${p.id}">
+	    				<div class="item col-md-3">
 	    				<div class="thumbnail">
 	    					<img class="group list-group-image" src="${p.imageLink}" alt="" />
 	    					<div class="caption">
@@ -64,6 +65,7 @@
 			                </div>
 	    				</div>
 	    			</div>
+	    			</a>
 	    		</c:forEach>
 	    	</c:if>
 	    	        
