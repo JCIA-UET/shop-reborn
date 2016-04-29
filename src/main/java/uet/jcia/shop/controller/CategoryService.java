@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uet.jcia.shop.model.Category;
 import uet.jcia.shop.model.CategoryManager;
 import uet.jcia.shop.model.Item;
+import uet.jcia.shop.model.Product;
+import uet.jcia.shop.model.ProductManager;
 
 /**
  * Servlet implementation class CategoryService
@@ -21,6 +24,7 @@ import uet.jcia.shop.model.Item;
 public class CategoryService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CategoryManager cm;
+    private ProductManager pm;
     
     public CategoryService() {
         super();
@@ -30,6 +34,7 @@ public class CategoryService extends HttpServlet {
     public void init() throws ServletException {
     	super.init();
     	cm = new CategoryManager();
+    	pm = new ProductManager();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,6 +49,17 @@ public class CategoryService extends HttpServlet {
 		if (action.equalsIgnoreCase("gallc")) {
 			List<Item> categories = cm.getAllItems();
 			request.setAttribute("categories", categories);
+		}
+		// Get ALL Category With its Products
+		else if (action.equalsIgnoreCase("gallcwp")) {
+			List<Category> categories = (List<Category>)(List<?>) cm.getAllItems();
+			for (Category c : categories) {
+				List<Product> ps = pm.getAllProductByCategoryId(c.getId());
+				c.setProducts(ps);
+			}
+			
+			request.setAttribute("categories", categories);
+			destination = "/home.jsp";
 		}
 		
 		forwardStream(request, response, destination);

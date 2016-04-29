@@ -27,10 +27,11 @@
 		
 		<div class="container">
 		    <div class="well well-sm">
-		        <strong>${categoryName}</strong>
+		        <strong>${category.name}</strong>
 		    </div>
 		    <div id="categories-list" class="row list-group">
-		    	<c:if test="${not empty products}">
+		    	<c:if test="${not empty category.products}">
+		    		<c:set var="products" value="${category.products}"></c:set>
 		    		<c:forEach var="p" items="${products}">
 		    			<div class="item col-md-3">
 		    				<div class="thumbnail">
