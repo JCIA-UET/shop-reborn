@@ -19,7 +19,7 @@
 <body>
 	
 	<!-- header -->
-	
+	<jsp:include page="header.jsp"></jsp:include>
 
 	<!-- content -->
 	<div class="container">
@@ -49,12 +49,15 @@
 	    		</form>
 	    </div>
 	</div>
+	
+	<!-- footer -->
+	<jsp:include page="footer.jsp"></jsp:include>
+	
 		<c:if test="${not empty message}">
 		<script type="text/javascript">
 			document.getElementById("alert-fail").style.display = "block";
 		</script>
 	    </c:if>
-	<!-- footer -->
-
+	
 </body>
 </html>    

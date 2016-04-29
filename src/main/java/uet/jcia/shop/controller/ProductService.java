@@ -42,20 +42,12 @@ public class ProductService extends HttpServlet {
 			return ;
 		}
 		
-
-		//String message = null;
-		String destination = "/category.jsp";
-
-		
-		// get products by category id
-		if (action.equalsIgnoreCase("gpbyid")) {
-		 destination = "/category.jsp";
+		String destination = null;
 		
 		// get products by category id
 		if (action.equalsIgnoreCase("gpbycid")) {
 			destination = "/category.jsp";
 			
-
 			try {
 				String categoryIdStr = req.getParameter("categoryid");
 				int categoryId = Integer.parseInt(categoryIdStr);
@@ -112,7 +104,7 @@ public class ProductService extends HttpServlet {
 		
 		forwardStream(req, rsp, destination);
 	}
-	}
+	
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
 			throws ServletException, IOException {
 		

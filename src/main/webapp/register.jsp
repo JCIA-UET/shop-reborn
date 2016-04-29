@@ -18,6 +18,8 @@
 </head>
 <body>
 	
+	<!-- header -->
+	<jsp:include page="header.jsp"></jsp:include>
 	
 	<!-- content -->
 	<div class="container">
@@ -82,6 +84,9 @@
 	    	</form>
 	    </div>
 	</div>
+	
+	<!-- footer -->
+	<jsp:include page="footer.jsp"></jsp:include>
 	
 	<script type="text/javascript">
 		function check(){
