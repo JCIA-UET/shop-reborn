@@ -56,11 +56,7 @@
 					  	</span>
 					</div>
 					<div class="col-md-4">
-						<form action="...">
-							<button class="btn btn-lg btn-success">
-					   			Add to Cart
-					  		</button>
-						</form>
+						<a href="TransactionService?action=add2cart&productid=${product.id}&quantity=1" class="btn btn-success btn-md">Add to cart</a>
 					</div>
 				</div>
 				<div class="row"></div>
@@ -76,16 +72,21 @@
 	<script>
 		var qty = document.getElementById('quantity').value;
 		
-		function increaseQty() {
-			qty++;
-			document.getElementById('quantity').value = qty;
-		}
-		
-		function descreaseQty() {
-			if (qty <= 0) return ;
-			qty--;
-			document.getElementById('quantity').value = qty;
-		}
+        function increaseQty() {
+            qty++;
+            document.getElementById('quantity').value = qty;
+            var link = "TransactionService?action=add2cart&productid=${product.id}&quantity=" + qty;
+            document.getElementById('addLink').href = link;
+        }
+        
+        function descreaseQty() {
+ 
+            qty--;
+            if (qty <= 0) qty = 1;
+            document.getElementById('quantity').value = qty;
+            var link = "TransactionService?action=add2cart&productid=${product.id}&quantity=" + qty;
+            document.getElementById('addLink').href = link;
+        }
 	</script>
 </body>
 </html>    

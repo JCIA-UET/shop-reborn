@@ -59,6 +59,7 @@ public class ProductService extends HttpServlet {
 				
 				req.setAttribute("categoryName", categoryName);
 				req.setAttribute("products", products);
+				req.setAttribute("categoryid", categoryId);
 				
 			} catch (Exception e) {
 				req.setAttribute("message", "Cannot get products");
