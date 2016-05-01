@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>JCIA Shop - Login</title>
+	<title>JCIA Shop - Sign in</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,46 +31,46 @@
 	   				  The username really existed ! 
  				</div>
 	    		<div class="form-group required">
-		            <label class="col-sm-2 control-label" for="realname">Full Name</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="realname">Full Name</label>
+		            <div class="col-sm-9">
 		                <input name="fullname" placeholder="Full Name" id="realname" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
-		            <label class="col-sm-2 control-label" for="phonenumber">Phone number</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="phonenumber">Phone number</label>
+		            <div class="col-sm-9">
 		                <input name="phonenumber" placeholder="Phone number" id="phonenumber" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <legend>Address</legend>
                 <div class="form-group">
-		            <label class="col-sm-2 control-label" for="city">City</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="city">City</label>
+		            <div class="col-sm-9">
 		                <input name="city" placeholder="City" id="city" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
-		            <label class="col-sm-2 control-label" for="address">Address</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="address">Address</label>
+		            <div class="col-sm-9">
 		                <input name="address" placeholder="Address" id="address" class="form-control" type="text" required="required">
             		</div>
                 </div>
 	    		<legend>Account</legend>
 	    		<div class="form-group required">
-		            <label class="col-sm-2 control-label" for="address">Username</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="address">Username</label>
+		            <div class="col-sm-9">
 		                <input name="username" placeholder="Username" id="username" class="form-control" type="text" required="required">
             		</div>
                 </div>
                 <div class="form-group required">
-		            <label class="col-sm-2 control-label" for="password">Password</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="password">Password</label>
+		            <div class="col-sm-9">
 		                <input name="password" placeholder="Password" id="password" class="form-control" type="password"  required="required">
             		</div>
                 </div>
                 <div class="form-group required">
-		            <label class="col-sm-2 control-label" for="re-password">Re-type Password</label>
-		            <div class="col-sm-10">
+		            <label class="col-sm-3 control-label" for="re-password">Re-type Password</label>
+		            <div class="col-sm-9">
 		                <input name="re-password" placeholder="Re-type Password" id="re-password" class="form-control" type="password" required="required">
             		</div>
             		

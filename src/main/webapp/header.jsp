@@ -39,7 +39,9 @@
 					    	<li><a href="#"  onclick="account('change')">My Account</a></li>
 					    	<li><a href="#">Order History</a></li>
 						    <li role="separator" class="divider"></li>
+						    <li><a href="#" onclick="account('changePass')">Change PassWord</a></li>
 						    <li><a href="#" onclick="account('out')">Logout</a></li>
+						    
 	          			</c:when>
 	          			<c:otherwise>
 	          				<li><a href="register.jsp">Register</a></li>
@@ -138,6 +140,14 @@
 	function account(ac){
 		if(ac == "change"){
 			document.getElementById('action').value = "changeAccount";
+			document.getElementById("logoutform").submit();
+		}
+		if(ac == "out"){
+			document.getElementById("action").value ="logout";
+			document.getElementById("logoutform").submit();
+		}
+		if(ac == "changePass"){
+			document.getElementById("action").value ="changePassword";
 			document.getElementById("logoutform").submit();
 		}
 	}

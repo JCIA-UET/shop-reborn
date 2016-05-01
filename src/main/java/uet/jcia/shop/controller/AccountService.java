@@ -126,6 +126,22 @@ public class AccountService extends HttpServlet {
 		    destination = "/change-account.jsp";
 		    
 		}
+		else if(action.equals("changePassword")){
+			destination = "/change-pass.jsp";
+		}
+		else if (action.equals("savepass")){
+			Account editAcc =(Account) session.getAttribute("account");
+			editAcc.setPassword(request.getParameter("newpassword"));
+			boolean change = accountManager.updateAccount(editAcc.getId(), editAcc);
+			if(change){
+				message = "change pass successfull!";
+			}
+			else{
+				message = " sorry , change pass fail !";
+			}
+			request.setAttribute("message", message);
+			destination = "/home.jsp";
+		}
 		request.getRequestDispatcher(destination).include(request, response);
 		
 	}
