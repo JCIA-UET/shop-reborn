@@ -33,35 +33,37 @@
 		    	<c:if test="${not empty category.products}">
 		    		<c:set var="products" value="${category.products}"></c:set>
 		    		<c:forEach var="p" items="${products}">
-		    			<div class="item col-md-3">
-		    				<div class="thumbnail">
-		    					<img class="group list-group-image" src="${p.imageLink}" alt="" />
-		    					<div class="caption">
-				                    <h4 class="group inner list-group-item-heading">
-				                        ${p.name}</h4>
-				                    <p class="group inner list-group-item-text">
-				                    	<c:set var="shortDes" value="${p.description}"></c:set>
-				                    	<c:if test="${fn:length(shortDes) > 120}">
-				                    		<c:set var="shortDes" value="${fn:substring(shortDes, 0, 120)}..."></c:set>
-				                    		${shortDes}
-				                    	</c:if>
-				                    </p>
-				                    <div class="row">
-				                        <div class="col-xs-12 col-md-6">
-				                            <p class="lead">
-				                            	<fmt:formatNumber type="currency" value="${p.price}">
-				                            	</fmt:formatNumber> 
-				                            </p>
-				                        </div>
-				                    </div>
-				                    <div class="row">
-				                    	<div class="col-xs-12 col-md-6">
-				                            <a class="btn btn-success" href="#">Add to cart</a>
-				                        </div>
-				                    </div>
-				                </div>
-		    				</div>
-		    			</div>
+		    			<a href="ProductService?action=gpbyid&productid=${p.id}">
+			    			<div class="item col-md-3">
+			    				<div class="thumbnail">
+			    					<img class="group list-group-image" src="${p.imageLink}" alt="" />
+			    					<div class="caption">
+					                    <h4 class="group inner list-group-item-heading">
+					                        ${p.name}</h4>
+					                    <p class="group inner list-group-item-text">
+					                    	<c:set var="shortDes" value="${p.description}"></c:set>
+					                    	<c:if test="${fn:length(shortDes) > 120}">
+					                    		<c:set var="shortDes" value="${fn:substring(shortDes, 0, 120)}..."></c:set>
+					                    		${shortDes}
+					                    	</c:if>
+					                    </p>
+					                    <div class="row">
+					                        <div class="col-xs-12 col-md-6">
+					                            <p class="lead">
+					                            	<fmt:formatNumber type="currency" value="${p.price}">
+					                            	</fmt:formatNumber> 
+					                            </p>
+					                        </div>
+					                    </div>
+					                    <div class="row">
+					                    	<div class="col-xs-12 col-md-6">
+					                            <a class="btn btn-success" href="#">Add to cart</a>
+					                        </div>
+					                    </div>
+					                </div>
+			    				</div>
+			    			</div>
+			    		</a>
 		    		</c:forEach>
 		    	</c:if>
 		    	        
