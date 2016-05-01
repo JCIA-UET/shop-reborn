@@ -54,7 +54,7 @@ public class AccountService extends HttpServlet {
 		String destination = null ;
 		HttpSession session = request.getSession();
 		
-		if(action.equals("login")){
+		if(action.equalsIgnoreCase("login")){
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			Account account = accountManager.authenticate(username, password);
@@ -71,7 +71,7 @@ public class AccountService extends HttpServlet {
 				destination = "/login.jsp";
 			}
 		}
-		else if(action.equals("register")){
+		else if(action.equalsIgnoreCase("register")){
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String realName = request.getParameter("fullname");

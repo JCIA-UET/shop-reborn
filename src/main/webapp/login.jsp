@@ -21,6 +21,7 @@
 	<!-- header -->
 	
 	<jsp:include page="header.jsp"></jsp:include>
+
 	<!-- content -->
 	<div class="container">
 	    <div class="well col-md-6">
@@ -49,6 +50,10 @@
 	    		</form>
 	    </div>
 	</div>
+	
+	
+	
+	
 		<c:if test="${not empty message}">
 		<script type="text/javascript">
 			document.getElementById("alert-fail").style.display = "block";
@@ -56,5 +61,6 @@
 	    </c:if>
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
+
 </body>
 </html>    
