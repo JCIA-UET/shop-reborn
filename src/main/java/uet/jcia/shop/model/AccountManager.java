@@ -150,4 +150,32 @@ public class AccountManager {
 		}
 		
 	}
+	public boolean removeAccountByUsername(String username){
+ 		return true;
+	}
+	public boolean updateAccount(int id, Account account){
+		String sqlCommand = "UPDATE account Set realName= ? , phone=? , city = ? , address=?,password=? WHERE accountId = ?; ";
+		PreparedStatement pst ; 
+		conn = dbconnector.createConnection();
+		try {
+			pst = conn.prepareStatement(sqlCommand);
+			pst.setString(1, account.getRealName());
+			pst.setString(2, account.getPhone());
+			pst.setString(3, account.getCity());
+			pst.setString(4, account.getAddress());
+			pst.setString(5, account.getPassword());
+			pst.setInt(6, id);
+			pst.executeUpdate();
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
 }
+
+	

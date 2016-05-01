@@ -36,10 +36,10 @@
           		<ul class="dropdown-menu">
 	          		<c:choose>
 	          			<c:when test="${not empty sessionScope.account}">
-					    	<li><a href="#">My Account</a></li>
+					    	<li><a href="#"  onclick="account('change')">My Account</a></li>
 					    	<li><a href="#">Order History</a></li>
 						    <li role="separator" class="divider"></li>
-						    <li><a href="#" onclick="document.getElementById('logoutform').submit()">Logout</a></li>
+						    <li><a href="#" onclick="account('out')">Logout</a></li>
 	          			</c:when>
 	          			<c:otherwise>
 	          				<li><a href="register.jsp">Register</a></li>
@@ -132,6 +132,14 @@
     </form>
 </div>
 <form action="AccountService" method="post" id="logoutform">
-	<input type="hidden" name="action" value="logout">
+	<input type="hidden" name="action" id="action">
 </form>
+<script>
+	function account(ac){
+		if(ac == "change"){
+			document.getElementById('action').value = "changeAccount";
+			document.getElementById("logoutform").submit();
+		}
+	}
+</script>
 

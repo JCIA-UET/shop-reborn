@@ -20,7 +20,7 @@
 	
 	<!-- header -->
 	
-
+	<jsp:include page="header.jsp"></jsp:include>
 	<!-- content -->
 	<div class="container">
 	    <div class="well col-md-6">
@@ -55,6 +55,6 @@
 		</script>
 	    </c:if>
 	<!-- footer -->
-
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>    
