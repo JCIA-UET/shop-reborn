@@ -108,7 +108,24 @@ public class AccountService extends HttpServlet {
 			session.removeAttribute("cart");
 			destination ="/home.jsp";
 		}
-		
+		else if (action.equals("changeAccount")){
+			destination = "/change-account.jsp";
+		}
+		else if(action.equals("edit-info")){
+		    Account editAcc =(Account) session.getAttribute("account");
+		    String name = request.getParameter("fullname");
+		    String phonenumber = request.getParameter("phonenumber");
+		    String 	city = request.getParameter("city");
+		    String address = request.getParameter("address");
+		    editAcc.setRealName(name);
+		    editAcc.setAddress(address);
+		    editAcc.setCity(city);
+		    editAcc.setPhone(phonenumber);
+		    accountManager.updateAccount(editAcc.getId(), editAcc);
+		    session.setAttribute("account", editAcc);
+		    destination = "/change-account.jsp";
+		    
+		}
 		request.getRequestDispatcher(destination).include(request, response);
 		
 	}
