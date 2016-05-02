@@ -21,7 +21,7 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<div class= "container">
 		 <div class="well col-md-6">
-		 	<h2>Change PassWord</h2>
+		 	<h2>Change Password</h2>
 		 	<form action="AccountService" method="post" class="form-horizontal" id="myForm">
 		 		<div class="form-group required">
 		            <label class="col-sm-3 control-label" for="address">Username</label>
@@ -61,10 +61,10 @@
                 	
                 </div>
                 <div class="col-sm-2">
-                	<a href="home.jsp" role="button" class="btn btn-danger">Cancel</a>
+                	<a href="index.jsp" role="button" class="btn btn-danger">Cancel</a>
                 </div>
-               <input type="hidden" id="passreal" value = "${account.password }">
-               <input type="hidden" id="message" value='${message}'>
+               <input type="hidden" id="passreal" value = "${account.password}">
+               <%-- <input type="hidden" id="message" value='${message}'> --%>
 		 	</form>
 		 	 
 		 </div>
@@ -91,9 +91,9 @@
 			document.getElementById("myForm").submit();
 		}
 	}
-	if(document.getElementById("message").value != ""){
+/* 	if(document.getElementById("message").value != ""){
 		alert(document.getElementById("message").value);
-	}
+	} */
 </script>
 
 	

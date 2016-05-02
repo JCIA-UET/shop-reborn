@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,9 +39,9 @@ public class AccountService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		request.getRequestDispatcher("/register.jsp").include(request, response);
+
+		forwardStream(request, response, "/register.jsp");
+
 	}
 
 	/**
@@ -50,7 +51,8 @@ public class AccountService extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-		String message = null ; 
+		String message = null ;
+		MessageType messageType = null;
 		String destination = null ;
 		HttpSession session = request.getSession();
 		
@@ -63,12 +65,13 @@ public class AccountService extends HttpServlet {
 				List<Product> cart = new ArrayList<>();
 				session.setAttribute("cart", cart);
 				session.setAttribute("account", account);
-				response.sendRedirect("/shop/index.jsp");
+				ServletContext context = getServletContext();
+				response.sendRedirect(context.getContextPath() + "/index.jsp");
 				destination = null ;
 			}
 			else {
+				messageType = MessageType.ERROR;
 			    message = "Login fail!";
-				request.setAttribute("message", message);
 				destination = "/login.jsp";
 			}
 		}
@@ -87,19 +90,21 @@ public class AccountService extends HttpServlet {
 				
 				int test = accountManager.addAccount(account);
 				if(test != 0){
+					messageType = MessageType.SUCCESS;
 					message = "Register Successfull !! ";
 					
 				}
 				else {
+					messageType = MessageType.ERROR;
 					message = "Register fail !!";
 					
 				}
-				request.setAttribute("message", message);
+				
 				destination = "/login.jsp";
 			}
 			else {
+				messageType = MessageType.ERROR;
 				message = "existed";
-				request.setAttribute("message", message);
 				destination = "/register.jsp";
 			}
 			
@@ -107,7 +112,8 @@ public class AccountService extends HttpServlet {
 		else if(action.equals("logout")){
 			session.removeAttribute("account");
 			session.removeAttribute("cart");
-			response.sendRedirect("/shop/index.jsp");
+			ServletContext context = getServletContext();
+			response.sendRedirect(context.getContextPath() + "/index.jsp");
 			destination = null ;
 		}
 		else if (action.equals("changeAccount")){
@@ -135,17 +141,32 @@ public class AccountService extends HttpServlet {
 			Account editAcc =(Account) session.getAttribute("account");
 			editAcc.setPassword(request.getParameter("newpassword"));
 			boolean change = accountManager.updateAccount(editAcc.getId(), editAcc);
+			
 			if(change){
-				message = "change pass successfull!";
+				messageType = MessageType.SUCCESS;
+				message = "change pass successfully!";
 			}
 			else{
-				message = " sorry , change pass fail !";
+				messageType = MessageType.ERROR;
+				message = " sorry, change pass fail!";
 			}
-			request.setAttribute("message", message);
+			
 			destination = "/change-pass.jsp" ;
 		}
+		
 		if(destination != null){
-		request.getRequestDispatcher(destination).forward(request, response);}		
+			request.setAttribute("messageType", messageType);
+			request.setAttribute("message", message);
+			forwardStream(request, response, destination);
+		}
+		
+	}
+	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
+			throws ServletException, IOException {
+		
+		ServletContext context = getServletContext();
+		RequestDispatcher dispatcher = context.getRequestDispatcher(destination);
+		dispatcher.forward(req, rsp);
 	}
 
 }
