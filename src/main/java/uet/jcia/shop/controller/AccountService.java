@@ -63,10 +63,10 @@ public class AccountService extends HttpServlet {
 				List<Product> cart = new ArrayList<>();
 				session.setAttribute("cart", cart);
 				session.setAttribute("account", account);
-				destination = "/home.jsp";
+				destination = "/index.jsp";
 			}
 			else {
-			    message = "<script type='text/javascript'>document.getElementById('alert-fail').style.display = 'block';</script>";
+			    message = "Login fail!";
 				request.setAttribute("message", message);
 				destination = "/login.jsp";
 			}
@@ -87,14 +87,14 @@ public class AccountService extends HttpServlet {
 				int test = accountManager.addAccount(account);
 				if(test != 0){
 					message = "Register Successfull !! ";
-					request.setAttribute("message", message);
-					destination = "/register-result.jsp";
+					
 				}
 				else {
 					message = "Register fail !!";
-					request.setAttribute("message", message);
-					destination = "/register-result.jsp";
+					
 				}
+				request.setAttribute("message", message);
+				destination = "/login.jsp";
 			}
 			else {
 				message = "existed";
