@@ -35,7 +35,7 @@ body {
 }
 
 /*for product list grip*/
-.glyphicon { margin-right:5px; }
+/* .glyphicon { margin-right:5px; } */
 .thumbnail
 {
     margin-bottom: 20px;
@@ -273,8 +273,11 @@ ul.dropdown-cart li .item-right button{
 /*end product view*/
 
 /* cart view */
-td#table-content-img, td#table-content-name, td#table-content-qtt, td#table-content-price, td#table-content-total, th#table-content-img, th#table-content-name, th#table-content-qtt, th#table-content-price, th#table-content-total {
-	border: 2px solid #dadada;
-}
 /* end cart view */
+
+/* checkout view */
+input#co-pos-center {
+	margin-left: 325px;
+}
+/* end checkout view */
 }

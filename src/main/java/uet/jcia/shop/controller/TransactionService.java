@@ -17,6 +17,7 @@ import uet.jcia.shop.model.Account;
 import uet.jcia.shop.model.AccountType;
 import uet.jcia.shop.model.Product;
 import uet.jcia.shop.model.ProductManager;
+import uet.jcia.shop.model.Transaction;
 
 /**
  * Servlet implementation class TransactionService
@@ -24,12 +25,14 @@ import uet.jcia.shop.model.ProductManager;
 @WebServlet("/TransactionService")
 public class TransactionService extends HttpServlet {
 	private ProductManager productManager;
+	private Transaction transaction;
 	private static final long serialVersionUID = 1L;
 	
 	@Override
     public void init() throws ServletException {
     	super.init();
     	productManager = new ProductManager();
+    	transaction = new Transaction();
     }
 	
 	/**
@@ -50,18 +53,9 @@ public class TransactionService extends HttpServlet {
 		
 		System.out.println("Action:" +action);
 		
-		if (action == null) {
-			return ;
-		}
-		
-		if (action.equalsIgnoreCase("show-cart")) {
-			//List<Product> shoppingCart = (List<Product>) session.getAttribute("cart");
-			session.setAttribute("cart", shoppingCart);
-			destination = "/checkout.jsp";
-			forwardStream(request, response, destination);
-		} 
-		else if (action.equalsIgnoreCase("add2cart")) {
+		if (action.equalsIgnoreCase("add2cart")) {
 			destination = "/shop/index.jsp";
+			boolean result = false;
 			
 			String szPId = request.getParameter("productid");
 			int pId = Integer.parseInt(szPId);
@@ -70,28 +64,95 @@ public class TransactionService extends HttpServlet {
 			int quantity = Integer.parseInt(szQuantity);
 			
 			Product product = (Product) productManager.getItemById(pId);
-			
-			System.out.println(product);
+
 			if (product != null) {
-				shoppingCart.add(product);
-				request.setAttribute("messageType", MessageType.SUCCESS);
-				message = product.getName() + " (x" + product.getQuantity() + ") has been added to cart successfully.";
-				session.setAttribute("cart", shoppingCart);
-				request.setAttribute("message", message);
-				request.setAttribute("chosenProduct", product);
-			} /*else {
-				message = "Errors occurs when adding product to your cart.";
+				Product pFound = null;
+				// Check if item is exist in cart or not???
+				pFound = (Product) transaction.findItemById(shoppingCart, pId);
+				
+				// Nothing, add to cart
+				if(pFound == null) {
+					product.setQuantity(quantity);
+					shoppingCart.add(product);
+					result = true;
+				}
+				else {
+					result = false;
+				}
+			}
+			else {
+				result = false;
+			}
+				
+			System.out.println(message);
+
+			if(!result) {
+				message = "Error when adding product in cart or product is exist in cart.";
 				request.setAttribute("messageType", MessageType.ERROR);
 				request.setAttribute("message", message);
-			}*/
-			System.out.println(message);
-			
-			for (Product p : shoppingCart) {
-				System.out.println("In cart" + p);
+				session.setAttribute("cart", shoppingCart);
 			}
+			else {
+				message = "Add successfully";
+				request.setAttribute("messageType", MessageType.SUCCESS);
+				request.setAttribute("message", message);
+				session.setAttribute("cart", shoppingCart);
+			}
+			
+			response.sendRedirect(destination);
+		}
+		else if (action.equalsIgnoreCase("delete")) {
+			destination = "your-cart.jsp";
+			String szPId = request.getParameter("productid");
+			int pId = Integer.parseInt(szPId);
+			
+			boolean result = transaction.removeItemById(shoppingCart, pId);
+			
+			if(!result) {
+				message = "Error when deleting product in cart";
+				request.setAttribute("messageType", MessageType.ERROR);
+				request.setAttribute("message", message);
+				session.setAttribute("cart", shoppingCart);
+			}
+			else {
+				message = "Delete successfully";
+				request.setAttribute("messageType", MessageType.SUCCESS);
+				request.setAttribute("message", message);
+				session.setAttribute("cart", shoppingCart);
+			}
+			
+			response.sendRedirect(destination);
+			
+			return;
+		}
+		else if(action.equalsIgnoreCase("update")) {
+			destination = "your-cart.jsp";
+			String szPId = request.getParameter("productid");
+			int pId = Integer.parseInt(szPId);
+			
+			String szQuantity = request.getParameter("qtt");
+			int quantity = Integer.parseInt(szQuantity);
+			System.out.println("new:" + quantity);
+			
+			boolean result = transaction.changeQttOfProduct(shoppingCart, pId, quantity);
+			
+			if(!result) {
+				message = "Error when updating quantity";
+				request.setAttribute("messageType", MessageType.ERROR);
+				request.setAttribute("message", message);
+				session.setAttribute("cart", shoppingCart);
+			}
+			else {
+				message = "Update successfully";
+				request.setAttribute("messageType", MessageType.SUCCESS);
+				request.setAttribute("message", message);
+				session.setAttribute("cart", shoppingCart);
+			}
+			
 			response.sendRedirect(destination);
 		}
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

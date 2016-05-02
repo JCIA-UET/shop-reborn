@@ -81,31 +81,35 @@ public class AccountService extends HttpServlet {
 			String city = request.getParameter("city");
 			String address = request.getParameter("address");
 			
-			Account accountEx = accountManager.getAccountByUsername(username);
-			if(accountEx == null){
-			
-				Account account = new Account(username, password, realName, phonenumber, city, address, AccountType.CUSTOMER);
+			if(username != null && password != null){
+				Account accountEx = accountManager.getAccountByUsername(username);
+				if(accountEx == null){
 				
-				int test = accountManager.addAccount(account);
-				if(test != 0){
-					messageType = MessageType.SUCCESS;
-					message = "Register Successfull !! ";
+					Account account = new Account(username, password, realName, phonenumber, city, address, AccountType.CUSTOMER);
 					
+					int test = accountManager.addAccount(account);
+					if(test != 0){
+						messageType = MessageType.SUCCESS;
+						message = "Register Successfull !! ";
+						
+					}
+					else {
+						messageType = MessageType.ERROR;
+						message = "Register fail !!";
+						
+					}
+					
+					destination = "/login.jsp";
 				}
 				else {
 					messageType = MessageType.ERROR;
-					message = "Register fail !!";
-					
+					message = "existed";
+					destination = "/register.jsp";
 				}
+			}
+			else if(username == null && password == null) {
 				
-				destination = "/login.jsp";
 			}
-			else {
-				messageType = MessageType.ERROR;
-				message = "existed";
-				destination = "/register.jsp";
-			}
-			
 		}
 		else if(action.equals("logout")){
 			session.removeAttribute("account");

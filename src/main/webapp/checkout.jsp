@@ -1,75 +1,117 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>JCIA Shop - Shopping Cart</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link href="assests/css/bootstrap.min.css" rel="stylesheet"/>
-    
-    <!-- custom style -->
-	<link href="assests/css/custom.css" rel="stylesheet"/>
+<title>JCIA Shop - Checkout</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="assests/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- custom style -->
+<link href="assests/css/custom.css" rel="stylesheet" />
 </head>
 <body>
 	<!-- header -->
 	<jsp:include page="header.jsp"></jsp:include>
-	
-	<!-- content -->
-	<div class="container">
-		<div class="main-content col-lg-12 col-md-12 col-sm-12">
-			<div id="main-table">
-				<br>
-				<p><b><u>Hint:</u></b> Click on
-					<span class="glyphicon glyphicon-refresh"></span>to update after changing item quantity/ 
-					Click on 
-					<span class="glyphicon glyphicon-remove"></span>to delete item from cart.
-				</p>
-				<hr style="margin:0px;">
-				<c:choose>
-					<c:when test="${not empty sessionScope.cart}">
-						<table class="table table-hover" >
-							<thead>
-								<tr>
-									<th class="text-center" id="table-content-img">Product image</th>
-									<th class="text-left" id="table-content-name">Name</th>
-									<th class="text-left" id="table-content-qtt">Quantity</th>
-									<th class="text-right" id="table-content-price">Unit price</th>
-									<th class="text-right" id="table-content-total">Total price</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="p" items="${sessionScope.cart}">
-									<tr>
-										<td class="text-center" id="table-content-img"><img src="${p.imageLink}" class="img-thumbnail" alt="" width="50" height="50"/></td>
-										<td class="text-left" id="table-content-name">${p.name}</td>
-										<td class="text-left" id="table-content-qtt">
-										
-										</td>
-										<td class="text-right" id="table-content-price">${p.price}</td>
-										<td class="text-right" id="table-content-total">${p.price * p.quantity}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</c:when>
-					<c:otherwise>
-						<p>There is nothing in your cart.</p>
-					</c:otherwise>
-				</c:choose>
+
+	<!--  content -->
+	<c:choose>
+		<c:when test="${empty account}">
+			<div class="container">
+				<div class="main-content col-lg-12 col-md-12 col-sm-12">
+					<h2>
+						Oops! Look like you haven't login yet. Please <a
+							href="/shop/login.jsp">login</a> to complete your order. <br>
+						Or fill out all information about you to make order immediately:
+					</h2>
+					<div class="well col-md-6">
+						<form action="AccountService" method="post"
+							class="form-horizontal" id="myForm">
+							<legend>Personal Details</legend>
+							<div class="alert alert-danger" style="display: none"
+								id="alert-usernamefail">The username really existed !</div>
+							<div class="form-group required">
+								<label class="col-sm-3 control-label" for="realname">Full
+									Name</label>
+								<div class="col-sm-9">
+									<input name="fullname" placeholder="Full Name" id="realname"
+										class="form-control" type="text" required="required">
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="col-sm-3 control-label" for="phonenumber">Phone
+									number</label>
+								<div class="col-sm-9">
+									<input name="phonenumber" placeholder="Phone number"
+										id="phonenumber" class="form-control" type="text"
+										required="required">
+								</div>
+							</div>
+							<legend>Address</legend>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="city">City</label>
+								<div class="col-sm-9">
+									<input name="city" placeholder="City" id="city"
+										class="form-control" type="text" required="required">
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="col-sm-3 control-label" for="address">Address</label>
+								<div class="col-sm-9">
+									<input name="address" placeholder="Address" id="address"
+										class="form-control" type="text" required="required">
+								</div>
+							</div>
+							
+							<input type="hidden" name="username" value="">
+							<input type="hidden" name="password" value="">
+							
+							<input type="hidden" name="action" value="register">
+							
+							<a class="btn btn-info pull-left" href="index.jsp" role="button">Continue Shopping</a>
+							
+							<input id="co-pos-center" value="Checkout" class="btn btn-danger" type="button">
+							<a class="btn btn-warning pull-right" href="your-cart.jsp" role="button">Back to cart</a>
+						</form>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	
+		</c:when>
+		<c:otherwise>
+			<p>Everything is done. All items are delivered to your address</p>
+		</c:otherwise>
+	</c:choose>
+
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
-
 </body>
+<script type="text/javascript">
+		function mobilenumber() {
+	       if(document.getElementById('phonenumber').value != ""){
+
+	       var y = document.getElementById('phonenumber').value;
+	       if(isNaN(y)||y.indexOf(" ")!=-1)
+	       {
+	          alert("Invalid Mobile No.");
+	          document.getElementById('phonenumber').focus();
+	          return false;
+	       }
+
+	       if (y.length>11 || y.length<10)
+	       {
+	            alert("Mobile No. should be 10 digit");
+	            document.getElementById('phonenumber').focus();
+	            return false;
+	       }
+
+
+	       }
+	    }
+	</script>
 </html>

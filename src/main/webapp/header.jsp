@@ -87,14 +87,18 @@
 	                        </ul>
 	                    </span>
 	                    <span class="item-right">
-	                        <a href="TransactionService?action=delete&categoryid=${item.categoryId}&productid=${item.id}" class="btn btn-xs btn-danger pull-right">x</a>
+	                    	<form action="TransactionService" method="post">
+	                    		<input type="hidden" name="productid" value="${item.id}"/>
+								<input type="hidden" name="action" value="delete"/>	                    	
+	                        	<button class="btn btn-xs btn-danger pull-right">x</button>
+	                        </form>
 	                    </span>
 	                </span>
 	              </li>
               </c:forEach>
 
               <li class="divider"></li>
-              <li><a class="text-center" name="action" value="show-cart" href="/shop/checkout.jsp">View Cart</a></li>
+              <li><a class="text-center" href="/shop/your-cart.jsp">View Cart</a></li>
           </ul>
         </li>
         <li>
