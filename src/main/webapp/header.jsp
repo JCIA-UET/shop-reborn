@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.servletContext.contextPath}"/>
 
@@ -30,9 +31,18 @@
       <!-- Account manager dropdown -->
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          		<span class="glyphicon glyphicon-user"></span>
-          		Account
-          		<span class="caret"></span>
+          		<c:choose>
+            		<c:when test="${not empty account}">
+          				<span class="glyphicon glyphicon-user"></span>
+          				Hello, ${account.username}
+          				<span class="caret"></span>
+          			</c:when>
+          			<c:otherwise>
+          				<span class="glyphicon glyphicon-user"></span>
+          				Account
+          				<span class="caret"></span>
+          			</c:otherwise>
+          		</c:choose>
           		<ul class="dropdown-menu">
 	          		<c:choose>
 	          			<c:when test="${not empty sessionScope.account}">
@@ -55,32 +65,36 @@
         <!-- Shopping cart dropdown -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          	<c:set var="numOfItems" value="${fn:length(sessionScope.products)}"></c:set>
+          	<c:set var="numOfItems" value="${fn:length(cart)}"></c:set>
           	<span class="glyphicon glyphicon-shopping-cart"></span>
           	 ${numOfItems} - Item(s)
           	<span class="caret"></span>
           </a>
           
           <ul class="dropdown-menu dropdown-cart" role="menu">
-              <c:forEach var="item" items="${sessionScope.products}">
+              <c:forEach var="item" items="${cart}">
 	              <li>
 	                  <span class="item">
 	                    <span class="item-left">
-	                        <img src="http://lorempixel.com/50/50/" alt="" />
-	                        <span class="item-info">
-	                            <span>item.name</span>
-	                            <span>item.price</span>
-	                        </span>
+	                        <img class="cart-list-img" src="${item.imageLink}" alt="" />
+	                        <ul class="item-info">
+	                            <li><a href="ProductService?action=gpbyid&productid=${item.id}">${item.name}</a></li>
+	                            <li class="text-center">x${item.quantity}</li>
+	                            <li>
+	                            	<c:set var="balance" value="${item.quantity * item.price}"/>
+	                            	<fmt:formatNumber type="currency" value="${balance}" />
+	                            </li>
+	                        </ul>
 	                    </span>
 	                    <span class="item-right">
-	                        <button class="btn btn-xs btn-danger pull-right">x</button>
+	                        <a href="TransactionService?action=delete&categoryid=${item.categoryId}&productid=${item.id}" class="btn btn-xs btn-danger pull-right">x</a>
 	                    </span>
 	                </span>
 	              </li>
               </c:forEach>
 
               <li class="divider"></li>
-              <li><a class="text-center" href="#">View Cart</a></li>
+              <li><a class="text-center" name="action" value="show-cart" href="/shop/checkout.jsp">View Cart</a></li>
           </ul>
         </li>
         <li>
@@ -124,7 +138,23 @@
 
 	</div>
 </div>
-
+<div class="container">
+	<c:choose>
+		<c:when test="${message == 'success'}">
+			<div class="alert alert-success">
+	  			<b>${chosenProduct.name} (x${chosenProduct.quantity})</b> has been added to your cart.
+			</div>
+		</c:when>
+		<c:when test="${message == null}">
+			<!-- Do nothing. -->
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-danger">
+	  			Errors occurs when adding product to your cart.
+			</div>
+		</c:otherwise>
+	</c:choose>
+</div>
 <div id="search">
     <button type="button" class="close">×</button>
     <form action="ProductService">

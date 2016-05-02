@@ -105,12 +105,12 @@ body {
   position: fixed; /* this can also be static */
 }
 ul.dropdown-cart{
-    min-width:250px;
+    min-width:700px;
 }
 ul.dropdown-cart li .item{
     display:block;
-    padding:3px 10px;
-    margin: 3px 0;
+    width: 700px;
+    padding:1px 10px;
 }
 ul.dropdown-cart li .item:hover{
     background-color:#f3f3f3;
@@ -127,21 +127,36 @@ ul.dropdown-cart li .item:after{
 ul.dropdown-cart li .item-left{
     float:left;
 }
+ul.dropdown-cart li .item-left img{
+    border-right: 2px solid #dedede;
+}
+
 ul.dropdown-cart li .item-left img,
-ul.dropdown-cart li .item-left span.item-info{
+ul.dropdown-cart li .item-left ul.item-info{
     float:left;
 }
-ul.dropdown-cart li .item-left span.item-info{
-    margin-left:10px;   
+
+ul.dropdown-cart li .item-left ul.item-info li{
+    padding-right:25px;
+    padding-left:25px;
+    height:40px;
+    border-right: 2px solid #dedede;
 }
-ul.dropdown-cart li .item-left span.item-info span{
-    display:block;
+/* ul.dropdown-cart li .item-left ul.item-info{
+    margin-left:10px;   
+} */
+ul.dropdown-cart li .item-left ul.item-info li{
+    display:inline-block;
 }
 ul.dropdown-cart li .item-right{
     float:right;
 }
 ul.dropdown-cart li .item-right button{
     margin-top:14px;
+}
+.cart-list-img {
+	width: 40px;
+    height: 40px;
 }
 /*end controller navbar*/
 
@@ -256,3 +271,10 @@ ul.dropdown-cart li .item-right button{
 	margin-top: 20px;
 }
 /*end product view*/
+
+/* cart view */
+td#table-content-img, td#table-content-name, td#table-content-qtt, td#table-content-price, td#table-content-total, th#table-content-img, th#table-content-name, th#table-content-qtt, th#table-content-price, th#table-content-total {
+	border: 2px solid #dadada;
+}
+/* end cart view */
+}
