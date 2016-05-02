@@ -40,7 +40,7 @@ public class AccountService extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		request.getRequestDispatcher("register.jsp").include(request, response);
+		request.getRequestDispatcher("/register.jsp").include(request, response);
 	}
 
 	/**
@@ -145,8 +145,7 @@ public class AccountService extends HttpServlet {
 			destination = "/change-pass.jsp" ;
 		}
 		if(destination != null){
-		request.getRequestDispatcher(destination).include(request, response);}
-		
+		request.getRequestDispatcher(destination).forward(request, response);}		
 	}
 
 }

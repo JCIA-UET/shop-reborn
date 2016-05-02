@@ -75,7 +75,7 @@
                		 <a class="btn btn-danger col-sm-6" href="home.jsp" role="button" style="display:none" id="btn-cancel">Cancel</a>
                	</div>
                 <input value="Edit" class="btn btn-primary" type="button" onclick="edit()" id="btn-edit" >
-                <a class="btn btn-danger" href="home.jsp" role="button" id="btn-backhome">Back Home</a>
+                <a class="btn btn-danger" href="index.jsp" role="button" id="btn-backhome">Back Home</a>
                
 	    	</form>
 	    </div>
