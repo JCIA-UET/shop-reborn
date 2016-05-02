@@ -140,19 +140,16 @@
 </div>
 <div class="container">
 	<c:choose>
-		<c:when test="${message == 'success'}">
+		<c:when test="${messageType == 'SUCCESS'}">
 			<div class="alert alert-success">
-	  			<b>${chosenProduct.name} (x${chosenProduct.quantity})</b> has been added to your cart.
+	  			<strong>Success!</strong> ${message}
 			</div>
 		</c:when>
-		<c:when test="${message == null}">
-			<!-- Do nothing. -->
-		</c:when>
-		<c:otherwise>
+		<c:when test="${messageType == 'ERROR'}">
 			<div class="alert alert-danger">
-	  			Errors occurs when adding product to your cart.
+	  			<strong>Error!</strong> ${message}
 			</div>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 </div>
 <div id="search">

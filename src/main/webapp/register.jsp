@@ -121,11 +121,11 @@
 	       }
 	    }
 	</script>
-	<c:if test="${message.equals('existed')}">
+<%-- 	<c:if test="${message.equals('existed')}">
 		<script type="text/javascript">
 			document.getElementById("alert-usernamefail").style.display="block";
 		</script>
-	</c:if>
+	</c:if> --%>
 
 </body>
 </html>    

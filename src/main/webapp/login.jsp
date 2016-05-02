@@ -47,7 +47,7 @@
 	    		<a href="#" >Forget password</a>
 	    		<div>If you do not have a account, please <a href="register.jsp">Sign In</a></div>
 	    		<input class="btn btn-primary pull-right" type="submit" value="Login">
-	    		<input type="hidden" id="message" value="${message }">
+	    		<%-- <input type="hidden" id="message" value="${message }"> --%>
 	    		</form>
 	    </div>
 	</div>
@@ -55,18 +55,18 @@
 	
 	
 	
-		
+<!-- 		
 		<script type="text/javascript">
 			if(document.getElementById("message").value == 'Login fail!')
 			document.getElementById("alert-fail").style.display = "block";
 		</script>
-	    
+	     -->
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 		if (document.getElementById("message").value!=""){
 			alert(document.getElementById("message").value);
 		}
-	</script>
+	</script> -->
 </body>
 </html>    

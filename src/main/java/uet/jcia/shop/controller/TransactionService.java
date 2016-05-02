@@ -82,14 +82,16 @@ public class TransactionService extends HttpServlet {
 			System.out.println(product);
 			if (product != null) {
 				shoppingCart.add(product);
-				message = "success";
+				request.setAttribute("messageType", MessageType.SUCCESS);
+				message = "Add to cart successfully.";
 				session.setAttribute("cart", shoppingCart);
 				request.setAttribute("message", message);
 				request.setAttribute("chosenProduct", product);
-			} else {
-				message = "failure";
+			} /*else {
+				message = "Errors occurs when adding product to your cart.";
+				request.setAttribute("messageType", MessageType.ERROR);
 				request.setAttribute("message", message);
-			}
+			}*/
 			System.out.println(message);
 			
 			String currentURI = (String)request.getRequestURI();

@@ -62,6 +62,7 @@ public class ProductService extends HttpServlet {
 				req.setAttribute("categoryid", categoryId);
 				
 			} catch (Exception e) {
+				req.setAttribute("messageType", MessageType.ERROR);
 				req.setAttribute("message", "Cannot get products");
 				forwardStream(req, rsp, destination);
 				return ;
@@ -81,6 +82,7 @@ public class ProductService extends HttpServlet {
 				req.setAttribute("product", p);
 				
 			} catch (Exception e) {
+				req.setAttribute("messageType", MessageType.ERROR);
 				req.setAttribute("message", "Cannot get product");
 				forwardStream(req, rsp, destination);
 				return ;
@@ -93,6 +95,7 @@ public class ProductService extends HttpServlet {
 			destination = "/search.jsp";
 			
 			if (input.isEmpty()) {
+				req.setAttribute("messageType", MessageType.ERROR);
 				req.setAttribute("message", "you can not leave input empty");
 			
 			} else {
