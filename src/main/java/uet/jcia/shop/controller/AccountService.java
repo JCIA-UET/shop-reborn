@@ -63,7 +63,8 @@ public class AccountService extends HttpServlet {
 				List<Product> cart = new ArrayList<>();
 				session.setAttribute("cart", cart);
 				session.setAttribute("account", account);
-				destination = "/index.jsp";
+				response.sendRedirect("/shop/index.jsp");
+				destination = null ;
 			}
 			else {
 			    message = "Login fail!";
@@ -106,7 +107,8 @@ public class AccountService extends HttpServlet {
 		else if(action.equals("logout")){
 			session.removeAttribute("account");
 			session.removeAttribute("cart");
-			destination ="/home.jsp";
+			response.sendRedirect("/shop/index.jsp");
+			destination = null ;
 		}
 		else if (action.equals("changeAccount")){
 			destination = "/change-account.jsp";
@@ -140,9 +142,10 @@ public class AccountService extends HttpServlet {
 				message = " sorry , change pass fail !";
 			}
 			request.setAttribute("message", message);
-			destination = "/home.jsp";
+			destination = "/change-pass.jsp" ;
 		}
-		request.getRequestDispatcher(destination).include(request, response);
+		if(destination != null){
+		request.getRequestDispatcher(destination).include(request, response);}
 		
 	}
 
