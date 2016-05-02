@@ -44,20 +44,25 @@
 					</div>
 				</div>
 				<div class="row add-to-cart">
-					<div class="col-md-5 product-qty">
-				    	<span class="btn btn-default btn-lg btn-qty">
-							<span onclick="increaseQty()" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-					    </span>
+					<form action="TransactionService" method="post">
+						<div class="col-md-5 product-qty">
+				    		<span class="btn btn-default btn-lg btn-qty">
+								<span onclick="increaseQty()" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					   		</span>
+					   		
+					   		<input type="hidden" name="fwdLink" value="/ProductService?action=gpbyid&productid=${product.id }"/>
+							<input type="hidden" name="productid" value="${product.id}"/>
+							<input name="qtt" class="btn btn-default btn-lg btn-qty" id="quantity" value="1" />
 					
-						<input class="btn btn-default btn-lg btn-qty" id="quantity" value="1" />
-					
-					  	<span class="btn btn-default btn-lg btn-qty">
-					   		<span onclick="descreaseQty()" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					  	</span>
-					</div>
-					<div class="col-md-4">
-						<a href="TransactionService?action=add2cart&productid=${product.id}&quantity=1" class="btn btn-success btn-md">Add to cart</a>
-					</div>
+					  		<span class="btn btn-default btn-lg btn-qty">
+					   			<span onclick="descreaseQty()" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					  		</span>
+						</div>
+						<div class="col-md-4">
+							<input type="hidden" name="action" value="add2cart"></button>
+							<button class="btn btn-success btn-md">Add to cart</button>
+						</div>
+					</form>
 				</div>
 				<div class="row"></div>
 				<div class="col-md-12 panel product-description">

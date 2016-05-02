@@ -36,7 +36,7 @@ public class TransactionService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String message = null;
@@ -61,29 +61,21 @@ public class TransactionService extends HttpServlet {
 			forwardStream(request, response, destination);
 		} 
 		else if (action.equalsIgnoreCase("add2cart")) {
+			destination = "/shop/index.jsp";
 			
-			for (Product p : shoppingCart) {
-				System.out.println("In cart" + p);
-			}
 			String szPId = request.getParameter("productid");
 			int pId = Integer.parseInt(szPId);
 			
-			String szQuantity = request.getParameter("quantity");
+			String szQuantity = request.getParameter("qtt");
 			int quantity = Integer.parseInt(szQuantity);
 			
-			String szCategory = request.getParameter("categoryid");
-			int categoryid = 0;
-			if(szCategory != null)
-				categoryid = Integer.parseInt(szCategory);
-			
 			Product product = (Product) productManager.getItemById(pId);
-			product.setQuantity(quantity);
 			
 			System.out.println(product);
 			if (product != null) {
 				shoppingCart.add(product);
 				request.setAttribute("messageType", MessageType.SUCCESS);
-				message = "Add to cart successfully.";
+				message = product.getName() + " (x" + product.getQuantity() + ") has been added to cart successfully.";
 				session.setAttribute("cart", shoppingCart);
 				request.setAttribute("message", message);
 				request.setAttribute("chosenProduct", product);
@@ -94,27 +86,17 @@ public class TransactionService extends HttpServlet {
 			}*/
 			System.out.println(message);
 			
-			String currentURI = (String)request.getRequestURI();
-			System.out.println("Current:" + request.getRequestURI());
-			
-			if(szCategory == null)
-				destination = "/ProductService?action=gpbyid&productid=" + pId;
-			else
-				destination = "/ProductService?action=gpbycid&categoryid=" + categoryid;
-			
 			for (Product p : shoppingCart) {
 				System.out.println("In cart" + p);
 			}
-			
-			System.out.println(destination);
-			forwardStream(request, response, destination);
+			response.sendRedirect(destination);
 		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
