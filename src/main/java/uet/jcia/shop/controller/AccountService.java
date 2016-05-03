@@ -61,13 +61,21 @@ public class AccountService extends HttpServlet {
 			String password = request.getParameter("password");
 			Account account = accountManager.authenticate(username, password);
 			if(account!=null){
+				List<Product> cart = (List<Product>) session.getAttribute("cart");
 				
-				List<Product> cart = new ArrayList<>();
+				if(cart != null && !cart.isEmpty()) {
+					destination = "your-cart.jsp";
+				}
+				else {
+					cart = new ArrayList<Product>();
+					destination = "index.jsp";
+				}
+				
 				session.setAttribute("cart", cart);
 				session.setAttribute("account", account);
 				ServletContext context = getServletContext();
-				response.sendRedirect(context.getContextPath() + "/index.jsp");
-				destination = null ;
+				response.sendRedirect(destination);
+				destination = null;
 			}
 			else {
 				messageType = MessageType.ERROR;
@@ -82,12 +90,12 @@ public class AccountService extends HttpServlet {
 			String phonenumber = request.getParameter("phonenumber");
 			String city = request.getParameter("city");
 			String address = request.getParameter("address");
-			
+
 			Account accountEx = accountManager.getAccountByUsername(username);
 			if(accountEx == null){
-			
-				Account account = new Account(username, password, realName, phonenumber, city, address, AccountType.CUSTOMER);
 				
+				Account account = new Account(username, password, realName, phonenumber, city, address, AccountType.CUSTOMER);
+					
 				int test = accountManager.addAccount(account);
 				if(test != 0){
 					messageType = MessageType.SUCCESS;
@@ -97,9 +105,9 @@ public class AccountService extends HttpServlet {
 				else {
 					messageType = MessageType.ERROR;
 					message = "Register fail !!";
-					
+						
 				}
-				
+			
 				destination = "/login.jsp";
 			}
 			else {
@@ -107,13 +115,13 @@ public class AccountService extends HttpServlet {
 				message = "existed";
 				destination = "/register.jsp";
 			}
-			
 		}
 		else if(action.equals("logout")){
+			destination = "index.jsp";
 			session.removeAttribute("account");
 			session.removeAttribute("cart");
 			ServletContext context = getServletContext();
-			response.sendRedirect(context.getContextPath() + "/index.jsp");
+			response.sendRedirect(destination);
 			destination = null ;
 		}
 		else if (action.equals("changeAccount")){

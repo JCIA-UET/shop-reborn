@@ -78,27 +78,31 @@
 	                    <span class="item-left">
 	                        <img class="cart-list-img" src="${item.imageLink}" alt="" />
 	                        <ul class="item-info">
-	                            <li><a href="ProductService?action=gpbyid&productid=${item.id}">${item.name}</a></li>
-	                            <li class="text-center">x${item.quantity}</li>
-	                            <li>
-	                            	<c:set var="balance" value="${item.quantity * item.price}"/>
-	                            	<fmt:formatNumber type="currency" value="${balance}" />
+	                            <li id="name"><a href="ProductService?action=gpbyid&productid=${item.id}">${item.name}</a></li>
+	                            <li id="qtt">x${item.quantity}</li>
+	                            <li id="total">
+	                            	<c:set var="total" value="${item.quantity * item.price}"/>
+	                            	<fmt:formatNumber type="currency" value="${total}" />
 	                            </li>
 	                        </ul>
 	                    </span>
 	                    <span class="item-right">
-	                        <a href="TransactionService?action=delete&categoryid=${item.categoryId}&productid=${item.id}" class="btn btn-xs btn-danger pull-right">x</a>
+	                    	<form action="TransactionService" method="post">
+	                    		<input type="hidden" name="productid" value="${item.id}"/>
+								<input type="hidden" name="action" value="delete"/>	                    	
+	                        	<button class="btn btn-xs btn-danger pull-right">x</button>
+	                        </form>
 	                    </span>
 	                </span>
 	              </li>
               </c:forEach>
 
               <li class="divider"></li>
-              <li><a class="text-center" name="action" value="show-cart" href="/shop/checkout.jsp">View Cart</a></li>
+              <li><a class="text-center" href="/shop/your-cart.jsp">View Cart</a></li>
           </ul>
         </li>
         <li>
-        	<a href="#" title="Checkout">
+        	<a href="TransactionService?action=checkout" title="Checkout">
         		<i class="glyphicon glyphicon-floppy-save"></i>
         		<span>Checkout</span>
         	</a>

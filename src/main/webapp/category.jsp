@@ -61,9 +61,13 @@
 									</div>
 								</a>
 								<div class="row">
-									<a  href="TransactionService?action=add2cart&categoryid=${categoryid}&productid=${p.id}&quantity=1"
-										class="btn btn-success btn-md"
-										style="margin: 0px 0px 10px 30px;">Add to cart</a>
+									<form action="TransactionService" method="post">
+										<input type="hidden" name="productid" value="${p.id }"/>
+										<input type="hidden" name="qtt" value="1"/>
+										<input type="hidden" name="action" value="add2cart"/>
+									
+										<button class="btn btn-success btn-md" style="margin: 0px 0px 10px 30px;">Add to cart</button>
+									</form>
 								</div>
 							</div>
 						</div>
