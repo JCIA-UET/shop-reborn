@@ -1,4 +1,5 @@
 .container {
+	margin-bottom:10px;
 }
 body {
     /* background-image: url("../../img/background.jpg"); */
@@ -273,6 +274,46 @@ ul.dropdown-cart li .item-right button{
 /*end product view*/
 
 /* cart view */
+table tr td.tb-cnt-img, table tr th.tb-cnt-img {
+	text-align: center;
+	max-width: 50px;
+	border-right: 1px solid #dedede;
+}
+table tr td.tb-cnt-name, table tr th.tb-cnt-name {
+	text-align: left;
+	max-width: 100px;
+	border-right: 1px solid #dedede;
+}
+table tr td.tb-cnt-qtt, table tr th.tb-cnt-qtt {
+	text-align: center;
+	max-width:50px;
+	border-right:1px solid #dedede;
+}
+table tr td.tb-cnt-unit {
+	text-align: right;
+	max-width:70px;
+	border-right:1px solid #dedede;
+}
+table tr th.tb-cnt-unit {
+	text-align: center;
+	max-width:70px;
+	border-right:1px solid #dedede;
+}
+table tr td.tb-cnt-total {
+	text-align: right;
+	max-width:70px;
+	border-right:1px solid #dedede;
+}
+table tr th.tb-cnt-total {
+	text-align: center;
+	max-width:70px;
+	border-right:1px solid #dedede;
+}
+table tr td.tb-cnt-act, table tr th.tb-cnt-act {
+	text-align: center;
+	max-width:70px;
+	border-right:1px solid #dedede;
+}
 /* end cart view */
 
 /* checkout view */

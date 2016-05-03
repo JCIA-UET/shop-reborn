@@ -59,13 +59,21 @@ public class AccountService extends HttpServlet {
 			String password = request.getParameter("password");
 			Account account = accountManager.authenticate(username, password);
 			if(account!=null){
+				List<Product> cart = (List<Product>) session.getAttribute("cart");
 				
-				List<Product> cart = new ArrayList<>();
+				if(cart != null && !cart.isEmpty()) {
+					destination = "your-cart.jsp";
+				}
+				else {
+					cart = new ArrayList<Product>();
+					destination = "index.jsp";
+				}
+				
 				session.setAttribute("cart", cart);
 				session.setAttribute("account", account);
 				ServletContext context = getServletContext();
-				response.sendRedirect(context.getContextPath() + "/index.jsp");
-				destination = null ;
+				response.sendRedirect(destination);
+				destination = null;
 			}
 			else {
 				messageType = MessageType.ERROR;
@@ -107,10 +115,11 @@ public class AccountService extends HttpServlet {
 			}
 		}
 		else if(action.equals("logout")){
+			destination = "index.jsp";
 			session.removeAttribute("account");
 			session.removeAttribute("cart");
 			ServletContext context = getServletContext();
-			response.sendRedirect(context.getContextPath() + "/index.jsp");
+			response.sendRedirect(destination);
 			destination = null ;
 		}
 		else if (action.equals("changeAccount")){

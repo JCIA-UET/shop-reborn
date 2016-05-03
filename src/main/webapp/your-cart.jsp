@@ -23,40 +23,40 @@
 	
 	<!-- content -->
 	<div class="container">
-		<div class="main-content col-lg-12 col-md-12 col-sm-12">
+		<div class="well col-lg-12 col-md-12 col-sm-12">
 			<div id="main-table">
 				<br>
 				<p><b><u>Hint:</u></b> Click on
-					<span class="glyphicon glyphicon-refresh"></span>to update after changing item quantity/ 
+					<span class="glyphicon glyphicon-refresh"></span> to update after changing item quantity/ 
 					Click on 
-					<span class="glyphicon glyphicon-remove"></span>to delete item from cart.
+					<span class="glyphicon glyphicon-remove"></span> to delete item from cart.
 				</p>
-				<hr style="margin:0px;">
+				<hr style="margin:0px;border-color:#c6c6c6;">
 				<c:choose>
 					<c:when test="${not empty sessionScope.cart}">
 						<table class="table table-hover" >
 							<thead>
 								<tr>
-									<th><b>Product image</b></th>
-									<th><b>Name</b></th>
-									<th><b>Quantity</b></th>
-									<th><b>Unit price</b></th>
-									<th><b>Total price</b></th>
-									<th><b>Action</b></th>
+									<th class="tb-cnt-img"><b>Image</b></th>
+									<th class="tb-cnt-name"><b>Name</b></th>
+									<th class="tb-cnt-qtt"><b>Quantity</b></th>
+									<th class="tb-cnt-unit"><b>Unit price</b></th>
+									<th class="tb-cnt-total"><b>Total price</b></th>
+									<th class="tb-cnt-act"><b>Action</b></th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="p" items="${sessionScope.cart}">
 									<tr>
-										<td><img src="${p.imageLink}" class="img-thumbnail" alt="" width="50" height="50"/></td>
-										<td>${p.name}</td>
-										<td>
+										<td class="tb-cnt-img"><img src="${p.imageLink}" class="img-thumbnail" alt="" width="50" height="50"/></td>
+										<td class="tb-cnt-name">${p.name}</td>
+										<td class="tb-cnt-qtt">
 											<input type="hidden" name="productid" value="${p.id}"/>
 											<input class="form-control" id="qtt" type="text" name="quantity" value="${p.quantity}"/>
 										</td>
-										<td>${p.price}</td>
-										<td>${p.price * p.quantity}</td>
-										<td>
+										<td class="tb-cnt-unit">${p.price}</td>
+										<td class="tb-cnt-total">${p.price * p.quantity}</td>
+										<td class="tb-cnt-act">
 											<form action="TransactionService" method="post">
 												<input type="hidden" name="productid" value="${p.id }"/>
 												<input type="hidden" name="qtt" id="update" value="${p.quantity}" onclick="getValue()" />

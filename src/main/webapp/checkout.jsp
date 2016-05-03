@@ -6,86 +6,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>JCIA Shop - Checkout</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>JCIA Shop - Checkout</title>
+	
+	<c:if test="${empty sessionScope.account }">
+		<meta http-equiv="refresh" content="0;URL=login.jsp">
+	</c:if>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="assests/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="assests/css/bootstrap.min.css" rel="stylesheet" />
 
-<!-- custom style -->
-<link href="assests/css/custom.css" rel="stylesheet" />
-</head>
+	<!-- custom style -->
+	<link href="assests/css/custom.css" rel="stylesheet" />
+	</head>
 <body>
 	<!-- header -->
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<!--  content -->
 	<c:choose>
-		<c:when test="${empty sessionScope.account}">
+		<c:when test="${buyResult == true}">
 			<div class="container">
 				<div class="main-content col-lg-12 col-md-12 col-sm-12">
-					<h2>
-						Oops! Look like you haven't login yet. Please <a
-							href="/shop/login.jsp">login</a> to complete your order. <br>
-						Or fill out all information about you to make order immediately:
-					</h2>
-					<div class="well col-md-6">
-						<form action="TransactionService" method="post"
-							class="form-horizontal" id="myForm">
-							<legend>Personal Details</legend>
-							<div class="alert alert-danger" style="display: none"
-								id="alert-usernamefail">The username really existed !</div>
-							<div class="form-group required">
-								<label class="col-sm-3 control-label" for="realname">Full
-									Name</label>
-								<div class="col-sm-9">
-									<input name="fullname" placeholder="Full Name" id="realname"
-										class="form-control" type="text" required="required">
-								</div>
-							</div>
-							<div class="form-group required">
-								<label class="col-sm-3 control-label" for="phonenumber">Phone
-									number</label>
-								<div class="col-sm-9">
-									<input name="phonenumber" placeholder="Phone number"
-										id="phonenumber" class="form-control" type="text"
-										required="required">
-								</div>
-							</div>
-							<legend>Address</legend>
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="city">City</label>
-								<div class="col-sm-9">
-									<input name="city" placeholder="City" id="city"
-										class="form-control" type="text" required="required">
-								</div>
-							</div>
-							<div class="form-group required">
-								<label class="col-sm-3 control-label" for="address">Address</label>
-								<div class="col-sm-9">
-									<input name="address" placeholder="Address" id="address"
-										class="form-control" type="text" required="required">
-								</div>
-							</div>
-							
-							<input type="hidden" name="username" value="">
-							<input type="hidden" name="password" value="">
-							<input type="hidden" name="action" value="checkout">
-							
-							<button class="btn btn-danger">Checkout</button>
-						</form>
-					</div>
+					<a href="index.jsp" class="btn btn-info">Continue Shopping</a>
 				</div>
 			</div>
 		</c:when>
-		<c:otherwise>
+		<c:when test="${buyResult == null && empty sessionScope.cart}">
 			<div class="container">
 				<div class="main-content col-lg-12 col-md-12 col-sm-12">
-					<p>Everything is done. All items are delivered to your address</p>
+					<p>There are no item in your cart. <a href="index.jsp">Buy</a> something then checkout.</p>
 				</div>
 			</div>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 
 	<!-- footer -->

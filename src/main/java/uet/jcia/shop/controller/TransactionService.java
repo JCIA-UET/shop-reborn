@@ -37,7 +37,7 @@ public class TransactionService extends HttpServlet {
     }
 	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -152,43 +152,54 @@ public class TransactionService extends HttpServlet {
 			
 			response.sendRedirect(destination);
 		}
-		else if(action.equalsIgnoreCase("checkout")) {
-			destination = "checkout.jsp";
-			
-			Account acc = (Account) session.getAttribute("account");
-			AccountType type = null;
-			
-			if(acc != null) {
-				type = acc.getAccountType();
-			}
-			
-			AccountManager ac = new AccountManager();
-			
-			String fullname = request.getParameter("fullname");
-			String phonenumber = request.getParameter("phonenumber");
-			String city = request.getParameter("city");
-			String address = request.getParameter("address");
-			String username = null;
-			String password = null;
-			
-			Account newAcc = new Account(username, password, fullname, phonenumber, city, address, AccountType.CUSTOMER);
-			
-			int accid = ac.addAccount(newAcc);
-			Account customerAcc = ac.getAccountById(accid);
-			transaction.doBuy(null, address, customerAcc, shoppingCart);
-			session.setAttribute("cart", new ArrayList<Product>());
-			
-			response.sendRedirect(destination);
-			
-			
-		}
 	}
 	
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		System.out.println(action);
+		
+		String message = null;
+		String destination = null;
+		
+		HttpSession session = request.getSession();
+		List<Product> shoppingCart = (List<Product>) session.getAttribute("cart");
+		
+		if(shoppingCart == null) {
+			shoppingCart = new ArrayList<Product>();
+		}
+		
+		
+		if(action.equalsIgnoreCase("checkout")) {
+			System.out.println("CHECKOUT");
+			destination = "/checkout.jsp";
+
+			Account acc = (Account) session.getAttribute("account");
+			
+			if(acc == null) {
+				destination = "/login.jsp";
+				forwardStream(request, response, destination);
+				return;
+			}
+			
+			System.out.println(acc.getId() + acc.getUsername() + acc.getAccountType().toString());
+			
+			AccountType type = acc.getAccountType();
+			if(type != AccountType.CUSTOMER) return;
+			
+			int id = transaction.doBuy(null, acc.getAddress(), acc, shoppingCart);
+			request.setAttribute("messageType", MessageType.SUCCESS);
+			request.setAttribute("buyResult", true);
+			request.setAttribute("message", "All your items are delivered to your address!");
+			session.setAttribute("cart", new ArrayList<Product>());
+			System.out.println(id + " Buy success");
+			forwardStream(request, response, destination);
+			return;
+			
+		}
 	}
 
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
