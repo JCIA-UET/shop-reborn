@@ -8,7 +8,7 @@
 <head>
 	<title>JCIA Shop - Checkout</title>
 	
-	<c:if test="${empty sessionScope.account }">
+	<c:if test="${empty sessionScope.cart && empty sessionScope.account }">
 		<meta http-equiv="refresh" content="0;URL=login.jsp">
 	</c:if>
 	
@@ -27,17 +27,17 @@
 
 	<!--  content -->
 	<c:choose>
-		<c:when test="${buyResult == true}">
+		<c:when test="${buyResult == true && sessionScopr.cart != null}">
 			<div class="container">
 				<div class="main-content col-lg-12 col-md-12 col-sm-12">
 					<a href="index.jsp" class="btn btn-info">Continue Shopping</a>
 				</div>
 			</div>
 		</c:when>
-		<c:when test="${buyResult == null && empty sessionScope.cart}">
+		<c:when test="${empty sessionScope.cart}">
 			<div class="container">
 				<div class="main-content col-lg-12 col-md-12 col-sm-12">
-					<p>There are no item in your cart. <a href="index.jsp">Buy</a> something then checkout.</p>
+					<a href="index.jsp" class="btn btn-success">Buy Something</a>
 				</div>
 			</div>
 		</c:when>

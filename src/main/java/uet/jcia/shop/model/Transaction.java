@@ -76,4 +76,15 @@ public class Transaction {
 		}
 		return flag;
 	}
+	
+	public double getTotalCash(List<Product> shoppingCart) {
+		if(shoppingCart == null) return 0;
+		
+		double total = 0;
+		for(Product p : shoppingCart) {
+			total += (double) (p.getQuantity() * p.getPrice());
+		}
+		
+		return total;
+	}
 }

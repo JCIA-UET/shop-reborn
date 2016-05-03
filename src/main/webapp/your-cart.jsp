@@ -76,6 +76,13 @@
 										</td>
 									</tr>
 								</c:forEach>
+								<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td style="font-size:30px;text-align:right;"><b><u>Total:</u></b></h4></td>
+								<td style="text-align:right;vertical-align:middle;">${totalcash }</td>
+								</tr>
 							</tbody>
 						</table>
 					</c:when>
@@ -83,6 +90,8 @@
 						<p>There is nothing in your cart.</p>
 					</c:otherwise>
 				</c:choose>
+				<a href="index.jsp" class="btn btn-info pull-left">Continue Shopping</a>
+				<a href="TransactionService?action=checkout" class="btn btn-success pull-right">Checkout</a>
 			</div>
 		</div>
 	</div>

@@ -78,11 +78,11 @@
 	                    <span class="item-left">
 	                        <img class="cart-list-img" src="${item.imageLink}" alt="" />
 	                        <ul class="item-info">
-	                            <li><a href="ProductService?action=gpbyid&productid=${item.id}">${item.name}</a></li>
-	                            <li class="text-center">x${item.quantity}</li>
-	                            <li>
-	                            	<c:set var="balance" value="${item.quantity * item.price}"/>
-	                            	<fmt:formatNumber type="currency" value="${balance}" />
+	                            <li id="name"><a href="ProductService?action=gpbyid&productid=${item.id}">${item.name}</a></li>
+	                            <li id="qtt">x${item.quantity}</li>
+	                            <li id="total">
+	                            	<c:set var="total" value="${item.quantity * item.price}"/>
+	                            	<fmt:formatNumber type="currency" value="${total}" />
 	                            </li>
 	                        </ul>
 	                    </span>

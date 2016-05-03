@@ -52,8 +52,6 @@ public class TransactionService extends HttpServlet {
 			shoppingCart = new ArrayList<Product>();
 		}
 		
-		System.out.println("Action:" +action);
-		
 		if (action.equalsIgnoreCase("add2cart")) {
 			destination = "/shop/index.jsp";
 			boolean result = false;
@@ -88,18 +86,24 @@ public class TransactionService extends HttpServlet {
 			System.out.println(message);
 
 			if(!result) {
+				double totalCash = transaction.getTotalCash(shoppingCart);
 				message = "Error when adding product in cart or product is exist in cart.";
 				request.setAttribute("messageType", MessageType.ERROR);
 				request.setAttribute("message", message);
 				session.setAttribute("cart", shoppingCart);
+				session.setAttribute("totalcash", totalCash);
 			}
 			else {
+				double totalCash = transaction.getTotalCash(shoppingCart);
 				message = "Add successfully";
 				request.setAttribute("messageType", MessageType.SUCCESS);
 				request.setAttribute("message", message);
 				session.setAttribute("cart", shoppingCart);
+				session.setAttribute("totalcash", totalCash);
 			}
 			
+			double totalCash = transaction.getTotalCash(shoppingCart);
+			session.setAttribute("totalcash", totalCash);
 			response.sendRedirect(destination);
 		}
 		else if (action.equalsIgnoreCase("delete")) {
@@ -122,6 +126,8 @@ public class TransactionService extends HttpServlet {
 				session.setAttribute("cart", shoppingCart);
 			}
 			
+			double totalCash = transaction.getTotalCash(shoppingCart);
+			session.setAttribute("totalcash", totalCash);
 			response.sendRedirect(destination);
 			
 			return;
@@ -150,6 +156,8 @@ public class TransactionService extends HttpServlet {
 				session.setAttribute("cart", shoppingCart);
 			}
 			
+			double totalCash = transaction.getTotalCash(shoppingCart);
+			session.setAttribute("totalcash", totalCash);
 			response.sendRedirect(destination);
 		}
 	}
@@ -190,12 +198,21 @@ public class TransactionService extends HttpServlet {
 			AccountType type = acc.getAccountType();
 			if(type != AccountType.CUSTOMER) return;
 			
-			int id = transaction.doBuy(null, acc.getAddress(), acc, shoppingCart);
-			request.setAttribute("messageType", MessageType.SUCCESS);
-			request.setAttribute("buyResult", true);
-			request.setAttribute("message", "All your items are delivered to your address!");
-			session.setAttribute("cart", new ArrayList<Product>());
-			System.out.println(id + " Buy success");
+			if(!shoppingCart.isEmpty()){
+				transaction.doBuy(null, acc.getAddress(), acc, shoppingCart);
+			
+				request.setAttribute("messageType", MessageType.SUCCESS);
+				request.setAttribute("buyResult", true);
+				request.setAttribute("message", "All your items are delivered to your address!");
+			
+				session.removeAttribute("cart");
+				session.removeAttribute("totalcash");
+			}
+			else {
+				request.setAttribute("messageType", MessageType.ERROR);
+				request.setAttribute("message", "You have no item in cart.");
+			}
+
 			forwardStream(request, response, destination);
 			return;
 			

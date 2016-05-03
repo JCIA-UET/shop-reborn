@@ -106,11 +106,11 @@ body {
   position: fixed; /* this can also be static */
 }
 ul.dropdown-cart{
-    min-width:700px;
+    min-width:625px;
 }
 ul.dropdown-cart li .item{
     display:block;
-    width: 700px;
+    width: 625px;
     padding:1px 10px;
 }
 ul.dropdown-cart li .item:hover{
@@ -138,17 +138,28 @@ ul.dropdown-cart li .item-left ul.item-info{
 }
 
 ul.dropdown-cart li .item-left ul.item-info li{
-    padding-right:25px;
-    padding-left:25px;
+	display:inline-block;
     height:40px;
     border-right: 2px solid #dedede;
 }
-/* ul.dropdown-cart li .item-left ul.item-info{
-    margin-left:10px;   
-} */
-ul.dropdown-cart li .item-left ul.item-info li{
-    display:inline-block;
+ul.dropdown-cart li .item-left ul.item-info li#name {
+	text-align: left;
+	min-width: 250px;
+	max-width: 250px;
 }
+ul.dropdown-cart li .item-left ul.item-info li#qtt {
+	text-align: center;
+	vertical-align
+	min-width: 75px;
+	max-width: 75px;
+}
+ul.dropdown-cart li .item-left ul.item-info li#total {
+	text-align: right;
+	padding-right: 10px;
+	min-width: 150px;
+	max-width: 150px;
+}
+
 ul.dropdown-cart li .item-right{
     float:right;
 }
@@ -277,42 +288,42 @@ ul.dropdown-cart li .item-right button{
 table tr td.tb-cnt-img, table tr th.tb-cnt-img {
 	text-align: center;
 	max-width: 50px;
-	border-right: 1px solid #dedede;
+	border: 1px solid #dedede;
 }
 table tr td.tb-cnt-name, table tr th.tb-cnt-name {
 	text-align: left;
 	max-width: 100px;
-	border-right: 1px solid #dedede;
+	border: 1px solid #dedede;
 }
 table tr td.tb-cnt-qtt, table tr th.tb-cnt-qtt {
 	text-align: center;
 	max-width:50px;
-	border-right:1px solid #dedede;
+	border: 1px solid #dedede;
 }
 table tr td.tb-cnt-unit {
 	text-align: right;
 	max-width:70px;
-	border-right:1px solid #dedede;
+	border: 1px solid #dedede;
 }
 table tr th.tb-cnt-unit {
 	text-align: center;
 	max-width:70px;
-	border-right:1px solid #dedede;
+	border: 1px solid #dedede;
 }
 table tr td.tb-cnt-total {
 	text-align: right;
-	max-width:70px;
-	border-right:1px solid #dedede;
+	max-width: 70px;
+	border: 1px solid #dedede;
 }
 table tr th.tb-cnt-total {
 	text-align: center;
-	max-width:70px;
-	border-right:1px solid #dedede;
+	max-width: 70px;
+	border: 1px solid #dedede;
 }
 table tr td.tb-cnt-act, table tr th.tb-cnt-act {
 	text-align: center;
-	max-width:70px;
-	border-right:1px solid #dedede;
+	max-width: 70px;
+	border: 1px solid #dedede;
 }
 /* end cart view */
 
