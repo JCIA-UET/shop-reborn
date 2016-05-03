@@ -22,7 +22,7 @@
 
 	<!--  content -->
 	<c:choose>
-		<c:when test="${empty account}">
+		<c:when test="${empty sessionScope.account}">
 			<div class="container">
 				<div class="main-content col-lg-12 col-md-12 col-sm-12">
 					<h2>
@@ -31,7 +31,7 @@
 						Or fill out all information about you to make order immediately:
 					</h2>
 					<div class="well col-md-6">
-						<form action="AccountService" method="post"
+						<form action="TransactionService" method="post"
 							class="form-horizontal" id="myForm">
 							<legend>Personal Details</legend>
 							<div class="alert alert-danger" style="display: none"
@@ -71,20 +71,20 @@
 							
 							<input type="hidden" name="username" value="">
 							<input type="hidden" name="password" value="">
+							<input type="hidden" name="action" value="checkout">
 							
-							<input type="hidden" name="action" value="register">
-							
-							<a class="btn btn-info pull-left" href="index.jsp" role="button">Continue Shopping</a>
-							
-							<input id="co-pos-center" value="Checkout" class="btn btn-danger" type="button">
-							<a class="btn btn-warning pull-right" href="your-cart.jsp" role="button">Back to cart</a>
+							<button class="btn btn-danger">Checkout</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<p>Everything is done. All items are delivered to your address</p>
+			<div class="container">
+				<div class="main-content col-lg-12 col-md-12 col-sm-12">
+					<p>Everything is done. All items are delivered to your address</p>
+				</div>
+			</div>
 		</c:otherwise>
 	</c:choose>
 

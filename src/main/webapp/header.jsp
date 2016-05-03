@@ -102,7 +102,7 @@
           </ul>
         </li>
         <li>
-        	<a href="#" title="Checkout">
+        	<a href="checkout.jsp" title="Checkout">
         		<i class="glyphicon glyphicon-floppy-save"></i>
         		<span>Checkout</span>
         	</a>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import uet.jcia.shop.model.Account;
+import uet.jcia.shop.model.AccountManager;
 import uet.jcia.shop.model.AccountType;
 import uet.jcia.shop.model.Product;
 import uet.jcia.shop.model.ProductManager;
@@ -150,6 +151,36 @@ public class TransactionService extends HttpServlet {
 			}
 			
 			response.sendRedirect(destination);
+		}
+		else if(action.equalsIgnoreCase("checkout")) {
+			destination = "checkout.jsp";
+			
+			Account acc = (Account) session.getAttribute("account");
+			AccountType type = null;
+			
+			if(acc != null) {
+				type = acc.getAccountType();
+			}
+			
+			AccountManager ac = new AccountManager();
+			
+			String fullname = request.getParameter("fullname");
+			String phonenumber = request.getParameter("phonenumber");
+			String city = request.getParameter("city");
+			String address = request.getParameter("address");
+			String username = null;
+			String password = null;
+			
+			Account newAcc = new Account(username, password, fullname, phonenumber, city, address, AccountType.CUSTOMER);
+			
+			int accid = ac.addAccount(newAcc);
+			Account customerAcc = ac.getAccountById(accid);
+			transaction.doBuy(null, address, customerAcc, shoppingCart);
+			session.setAttribute("cart", new ArrayList<Product>());
+			
+			response.sendRedirect(destination);
+			
+			
 		}
 	}
 	
