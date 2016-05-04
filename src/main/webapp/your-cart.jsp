@@ -52,7 +52,7 @@
 										<td class="tb-cnt-name">${p.name}</td>
 										<td class="tb-cnt-qtt">
 											<input type="hidden" name="productid" value="${p.id}"/>
-											<input class="form-control" id="qtt" type="text" name="quantity" value="${p.quantity}"/>
+											<input class="form-control" id="updatedqtt" type="text" name="quantity" value="${p.quantity}"/>
 										</td>
 										<td class="tb-cnt-unit">
 											<fmt:formatNumber type="currency" value="${p.price}">
@@ -62,11 +62,11 @@
 											<fmt:formatNumber type="currency">${p.price * p.quantity}</fmt:formatNumber>
 										</td>
 										<td class="tb-cnt-act">
-											<form action="TransactionService" method="post">
-												<input type="hidden" name="productid" value="${p.id }"/>
-												<input type="hidden" name="qtt" id="update" value="${p.quantity}" onclick="getValue()" />
+											<form action="TransactionService" id="updateform" method="post">
+												<input type="hidden" name="productid" value="${p.id}"/>
+												<input type="hidden" id="qttinput" name="qtt"/>
 												<input type="hidden" name="action" value="update"/>
-												<button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Update">
+												<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Update">
 													<span class="glyphicon glyphicon-refresh"></span>
 												</button>
 											</form>
@@ -74,7 +74,7 @@
 											<form action="TransactionService" method="post">
 												<input type="hidden" name="productid" value="${p.id }"/>
 												<input type="hidden" name="action" value="delete"/>
-												<button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Remove">
+												<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Remove">
 													<span class="glyphicon glyphicon-remove-sign"></span>
 												</button>
 											</form>
@@ -113,9 +113,13 @@
 	    $('[data-toggle="tooltip"]').tooltip();   
 	});
 	
-	function getValue() {
-		var qtt = document.getElementById('qtt').value;
-		document.getElementById('update').value = qtt;
+	window.onload = function() {
+		document.getElementById('updateform').onsubmit = function() {
+			var updatedQtt = document.getElementById('updatedqtt').value;
+			var qttInput = document.getElementById('qttinput');
+			qttInput.value = updatedQtt;
+
+		};
 	}
 </script>
 </html>
