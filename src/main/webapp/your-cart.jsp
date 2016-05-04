@@ -54,8 +54,13 @@
 											<input type="hidden" name="productid" value="${p.id}"/>
 											<input class="form-control" id="qtt" type="text" name="quantity" value="${p.quantity}"/>
 										</td>
-										<td class="tb-cnt-unit">${p.price}</td>
-										<td class="tb-cnt-total">${p.price * p.quantity}</td>
+										<td class="tb-cnt-unit">
+											<fmt:formatNumber type="currency" value="${p.price}">
+											</fmt:formatNumber>
+										</td>
+										<td class="tb-cnt-total">
+											<fmt:formatNumber type="currency">${p.price * p.quantity}</fmt:formatNumber>
+										</td>
 										<td class="tb-cnt-act">
 											<form action="TransactionService" method="post">
 												<input type="hidden" name="productid" value="${p.id }"/>
@@ -81,7 +86,9 @@
 								<td></td>
 								<td></td>
 								<td style="font-size:30px;text-align:right;"><b><u>Total:</u></b></h4></td>
-								<td style="text-align:right;vertical-align:middle;">${totalcash }</td>
+								<td style="text-align:right;vertical-align:middle;">
+									<fmt:formatNumber type="currency">${totalcash}</fmt:formatNumber>
+								</td>
 								</tr>
 							</tbody>
 						</table>
