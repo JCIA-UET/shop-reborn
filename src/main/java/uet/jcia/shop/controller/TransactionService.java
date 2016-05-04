@@ -160,29 +160,7 @@ public class TransactionService extends HttpServlet {
 			session.setAttribute("totalcash", totalCash);
 			response.sendRedirect(destination);
 		}
-	}
-	
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		System.out.println(action);
-		
-		String message = null;
-		String destination = null;
-		
-		HttpSession session = request.getSession();
-		List<Product> shoppingCart = (List<Product>) session.getAttribute("cart");
-		
-		if(shoppingCart == null) {
-			shoppingCart = new ArrayList<Product>();
-		}
-		
-		
-		if(action.equalsIgnoreCase("checkout")) {
-			System.out.println("CHECKOUT");
+		else if (action.equalsIgnoreCase("checkout")) {
 			destination = "/checkout.jsp";
 
 			Account acc = (Account) session.getAttribute("account");
@@ -192,8 +170,6 @@ public class TransactionService extends HttpServlet {
 				forwardStream(request, response, destination);
 				return;
 			}
-			
-			System.out.println(acc.getId() + acc.getUsername() + acc.getAccountType().toString());
 			
 			AccountType type = acc.getAccountType();
 			if(type != AccountType.CUSTOMER) return;
@@ -218,6 +194,28 @@ public class TransactionService extends HttpServlet {
 			
 		}
 	}
+	
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		String action = request.getParameter("action");
+//		System.out.println(action);
+//		
+//		String message = null;
+//		String destination = null;
+//		
+//		HttpSession session = request.getSession();
+//		List<Product> shoppingCart = (List<Product>) session.getAttribute("cart");
+//		
+//		if(shoppingCart == null) {
+//			shoppingCart = new ArrayList<Product>();
+//		}
+//		
+//		if (action == null) return;
+//		
+//	}
 
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
 			throws ServletException, IOException {

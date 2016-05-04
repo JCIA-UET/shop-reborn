@@ -98,7 +98,7 @@
 					</c:otherwise>
 				</c:choose>
 				<a href="index.jsp" class="btn btn-info pull-left">Continue Shopping</a>
-				<a href="TransactionService?action=checkout" class="btn btn-success pull-right">Checkout</a>
+				<a href="checkout.jsp" class="btn btn-success pull-right">Go to Checkout</a>
 			</div>
 		</div>
 	</div>
