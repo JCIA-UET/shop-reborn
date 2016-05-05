@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Shop Admin</title>
+    <title>Categories</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -32,9 +32,32 @@
 <jsp:include page="header.jsp"></jsp:include>
         
 		<!-- content -->
-                    <h1 class="page-header">Dashboard</h1>
-                    JCIA Shop Admin Page
-        
+                    <h1 class="page-header">Categories List</h1>
+                    
+                    <a href="new-category.jsp">
+                    	<button class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
+                    </a>
+                    
+                    <table id="tbProducts" class="table table-striped table-borderd">
+                    	<thead>
+                    		<tr>
+	                    		<th>Category Name</th>
+	                    		<th class="text-right">Action</th>
+                    		</tr>
+                    	</thead>
+                    	<tbody>
+                    		<c:forEach var="c" items="${categoriesList}">
+                    			<tr>
+                    				<td>${c.name}</td>
+                    				<td class="text-right">
+	                    				<button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
+	                    				<button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                    				</td>
+                    			</tr>
+                    		</c:forEach>
+                    	</tbody>
+                    </table>
+
 	<!-- footer -->
 <jsp:include page="footer.jsp"></jsp:include>
 
