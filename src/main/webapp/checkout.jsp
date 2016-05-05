@@ -26,22 +26,53 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<!--  content -->
-	<c:choose>
-		<c:when test="${buyResult == true && sessionScopr.cart != null}">
-			<div class="container">
-				<div class="main-content col-lg-12 col-md-12 col-sm-12">
-					<a href="index.jsp" class="btn btn-info">Continue Shopping</a>
-				</div>
-			</div>
-		</c:when>
-		<c:when test="${empty sessionScope.cart}">
-			<div class="container">
-				<div class="main-content col-lg-12 col-md-12 col-sm-12">
-					<a href="index.jsp" class="btn btn-success">Buy Something</a>
-				</div>
-			</div>
-		</c:when>
-	</c:choose>
+	<div class="container">
+		<div class="well col-lg-12 col-md-12 col-sm-12">
+			<c:choose>
+				<c:when test="${not empty sessionScope.cart}">
+					<h2>Please confirm your <strong>information</strong> and <strong>the place</strong> where to receive our products</h2>
+					<hr/>
+					<c:set var="account" value="${sessionScope.account}"></c:set>
+					<form action="TransactionService" method="post" class="form-horizontal" id="checkoutForm">
+			    		<legend>Information</legend>
+			    		<div class="form-group required">
+				            <label class="col-sm-3 control-label" for="realname">Name</label>
+				            <div class="col-sm-9">
+				                <input name="fullname" id="realname" value="${account.realName}" class="form-control" type="text" required="required">
+		            		</div>
+		                </div>
+		                <div class="form-group required">
+				            <label class="col-sm-3 control-label" for="phonenumber">Phone number</label>
+				            <div class="col-sm-9">
+				                <input name="phonenumber" value="${account.phone}" id="phonenumber" class="form-control" type="text" required="required">
+		            		</div>
+		                </div>
+		                <legend>Where to pay</legend>
+		                <div class="form-group">
+				            <label class="col-sm-3 control-label" for="city">City</label>
+				            <div class="col-sm-9">
+				                <input name="city" value="${account.city}" id="city" class="form-control" type="text" required="required">
+		            		</div>
+		                </div>
+		                <div class="form-group required">
+				            <label class="col-sm-3 control-label" for="address">Address</label>
+				            <div class="col-sm-9">
+				                <input name="address" value="${account.address}" id="address" class="form-control" type="text" required="required">
+		            		</div>
+		                </div>
+		                <input type="hidden" name="action" value="checkout">
+		                <a href="index.jsp" class="btn btn-info pull-left">Continue shopping</a>
+			    	 	<button type="submit" class="btn btn-success pull-right">Checkout</button>
+			    	</form>
+			    	
+				</c:when>
+				<c:otherwise>
+					<h2>Your cart is empty now!</h2>
+					<a href="index.jsp" class="btn btn-info pull-left">Buy something</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
 
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
