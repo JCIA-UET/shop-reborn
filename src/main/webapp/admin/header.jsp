@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
+	<div id="wrapper">
 <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -77,16 +79,16 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="${root}/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-database fa-fw"></i> Repository<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Categories</a>
+                                    <a href="AdCategoryService?action=gallc">Categories</a>
                                 </li>
                                 <li>
-                                    <a href="#">Products</a>
+                                    <a href="AdProductService?action=gallp">Products</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -128,3 +130,22 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+
+			        <div class="row">
+			        	<c:choose>
+							<c:when test="${messageType == 'SUCCESS'}">
+								<div class="alert alert-success">
+						  			<strong>Success!</strong> ${message}
+								</div>
+							</c:when>
+							<c:when test="${messageType == 'ERROR'}">
+								<div class="alert alert-danger">
+						  			<strong>Error!</strong> ${message}
+								</div>
+							</c:when>
+						</c:choose>	
+			        </div>
