@@ -11,8 +11,8 @@ import uet.jcia.shop.model.*;
 public class ItemManagerTest {
 
 	public static void main(String[] args) {
-//		CategoryManager cm = new CategoryManager();
-		ProductManager pm = new ProductManager();
+		CategoryManager cm = new CategoryManager();
+//		ProductManager pm = new ProductManager();
 //		OrderManager om = new OrderManager();
 //		
 //		Category newItem = null;
@@ -56,7 +56,7 @@ public class ItemManagerTest {
 //		System.out.println(productManager.removeItemById(3));
 //		System.out.println(productManager.getAllItems());
 		
-		System.out.println(pm.getAllProductByCategoryId(1));
+//		System.out.println(pm.getAllProductByCategoryId(1));
 	}
 
 }

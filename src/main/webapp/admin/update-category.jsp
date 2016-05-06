@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>New Category</title>
+    <title>Update Category</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -42,13 +42,14 @@
 								<form action="AdCategoryService" role="form" method="post">
 									<div class="form-group">
 		                                <label>Category Name</label>
-		                                <input class="form-control" type="text" name="name" required>
+		                                <input class="form-control" type="text" name="name" value="${category.name}" required>
 	                                </div>
 	                                <div class="form-group">
 		                                <label>Description</label>
-		                                <textarea rows="10" class="form-control" name="description"></textarea>
+		                                <textarea rows="10" class="form-control" name="description">${category.description}</textarea>
 	                                </div>
-	                                <input type="hidden" name="action" value="addcat">
+	                                <input type="hidden" name="categoryid" value="${category.id}">
+	                                <input type="hidden" name="action" value="updatecat">
 	                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
 								</form>
 							</div>

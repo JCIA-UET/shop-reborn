@@ -50,8 +50,15 @@
                     			<tr>
                     				<td>${c.name}</td>
                     				<td class="text-right">
-	                    				<button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
-	                    				<button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+	                    				<a href="AdCategoryService?action=gcbyid&categoryid=${c.id}">
+	                    					<button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
+	                    				</a>
+	                    				<button onclick="document.getElementById('removeform${c.id}').submit();" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+	                    				
+	                    				<form action="AdCategoryService" method="post" id="removeform${c.id}">
+	                    					<input type="hidden" name="categoryid" value="${c.id}">
+	                    					<input type="hidden" name="action" value="removecat">
+	                    				</form>
                     				</td>
                     			</tr>
                     		</c:forEach>

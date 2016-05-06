@@ -147,5 +147,16 @@
 						  			<strong>Error!</strong> ${message}
 								</div>
 							</c:when>
-						</c:choose>	
+							<c:when test="${param.messagetype == 'SUCCESS'}">
+								<div class="alert alert-success">
+						  			<strong>Success!</strong> ${param.message}
+								</div>
+							</c:when>
+							<c:when test="${param.messagetype == 'ERROR'}">
+								<div class="alert alert-danger">
+						  			<strong>Error!</strong> ${param.message}
+								</div>
+							</c:when>
+							
+						</c:choose>
 			        </div>
