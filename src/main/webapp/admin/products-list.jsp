@@ -34,7 +34,7 @@
 		<!-- content -->
                     <h1 class="page-header">Products List</h1>
                     
-                    <a href="new-product.jsp">
+                    <a href="AdProductService?action=req2addp">
                     	<button class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
                     </a>
                     
@@ -56,8 +56,15 @@
                     				<td><fmt:formatNumber type="currency" value="${p.price}"></fmt:formatNumber></td>
                     				<td class="text-right">${p.quantity}</td>
                     				<td class="text-right">
-                    					<button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
-                    					<button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                    					<a href="AdProductService?action=gpbyid&productid=${p.id}">
+	                    					<button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
+	                    				</a>
+	                    				<button onclick="document.getElementById('removeform${p.id}').submit();" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+	                    				
+	                    				<form action="AdProductService" method="post" id="removeform${p.id}">
+	                    					<input type="hidden" name="productid" value="${p.id}">
+	                    					<input type="hidden" name="action" value="removeproduct">
+	                    				</form>
                     				</td>
                     			</tr>
                     		</c:forEach>

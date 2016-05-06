@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>New Product</title>
+    <title>Update Product</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -32,17 +32,30 @@
 <jsp:include page="header.jsp"></jsp:include>
         
 		<!-- content -->
-					<h1 class="page-header">Add new product</h1>
+					<h1 class="page-header">Update category</h1>
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							Please complete all following fields
+							Please upload image first
 						</div>
 						<div class="panel-body">
 							<div class="col-md-10">
+								<form action="ResourcesService" role="form" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+		                                <label>Image</label>
+		                                <br/>
+		                                <c:if test="${not empty product.imageLink}">
+		                                	<img src="../${product.imageLink}" style="width:50px; height:auto;"/>
+		                                </c:if>
+		                                <input type="file" name="file"/>
+		                                <input type="hidden" name="action" value="uploadimage"/>
+		                                <button type="submit">Upload</button>
+	                                </div>
+								</form>
 								<form action="AdProductService" role="form" method="post">
+									<input type="hidden" name="productid" value="${product.id}"/>
 									<div class="form-group">
 		                                <label>Product Name</label>
-		                                <input class="form-control" type="text" name="name" required>
+		                                <input class="form-control" type="text" name="name" value="${product.name}" required>
 	                                </div>
 									<div class="form-group">
 		                                <label>Category</label>
@@ -54,27 +67,19 @@
 	                                </div>
 									<div class="form-group">
 		                                <label>Price</label>
-		                                <input class="form-control" type="number" step="0.01" name="price" required>
+		                                <input class="form-control" type="number" step="0.01" name="price" value="${product.price}" required>
 	                                </div>
 									<div class="form-group">
 		                                <label>Quantity</label>
-		                                <input class="form-control" type="number" id="quantity" name="quantity" required>
-	                                </div>
-									<div class="form-group">
-		                                <label>Image</label>
-		                                <input type="file" name="file" size="50"/>
+		                                <input class="form-control" type="number" id="quantity" name="quantity" value="${product.quantity}" required>
 	                                </div>
 	                                <div class="form-group">
 		                                <label>Description</label>
-		                                <textarea rows="10" class="form-control" name="description" required></textarea>
+		                                <textarea rows="10" class="form-control" name="description" required>${product.description}</textarea>
 	                                </div>
 	                                
-	                                <input type="hidden" name="action" value="addproduct"/>
+	                                <input type="hidden" name="action" value="updateproduct"/>
 	                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
-								</form>
-								
-								<form action="ProductService" method="post" enctype="multipart/form-data">
-	                                <input type="hidden" name="action" value="uploadimage"/>
 								</form>
 							</div>
 						</div>

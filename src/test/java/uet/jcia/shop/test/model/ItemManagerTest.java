@@ -12,7 +12,10 @@ public class ItemManagerTest {
 
 	public static void main(String[] args) {
 		CategoryManager cm = new CategoryManager();
-//		ProductManager pm = new ProductManager();
+		ProductManager pm = new ProductManager();
+		
+		pm.updateItem(7,  new Product(7, "haha", 133, 124124.0, 14, "des", "jaja"));
+		
 //		OrderManager om = new OrderManager();
 //		
 //		Category newItem = null;
