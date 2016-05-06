@@ -11,8 +11,11 @@ import uet.jcia.shop.model.*;
 public class ItemManagerTest {
 
 	public static void main(String[] args) {
-//		CategoryManager cm = new CategoryManager();
+		CategoryManager cm = new CategoryManager();
 		ProductManager pm = new ProductManager();
+		
+		pm.updateItem(7,  new Product(7, "haha", 133, 124124.0, 14, "des", "jaja"));
+		
 //		OrderManager om = new OrderManager();
 //		
 //		Category newItem = null;
@@ -56,7 +59,7 @@ public class ItemManagerTest {
 //		System.out.println(productManager.removeItemById(3));
 //		System.out.println(productManager.getAllItems());
 		
-		System.out.println(pm.getAllProductByCategoryId(1));
+//		System.out.println(pm.getAllProductByCategoryId(1));
 	}
 
 }

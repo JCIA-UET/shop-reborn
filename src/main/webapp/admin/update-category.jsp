@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Shop Admin</title>
+    <title>Update Category</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -32,9 +32,30 @@
 <jsp:include page="header.jsp"></jsp:include>
         
 		<!-- content -->
-                    <h1 class="page-header">Dashboard</h1>
-                    JCIA Shop Admin Page
-        
+					<h1 class="page-header">Add new category</h1>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Please complete all following fields
+						</div>
+						<div class="panel-body">
+							<div class="col-md-10">
+								<form action="AdCategoryService" role="form" method="post">
+									<div class="form-group">
+		                                <label>Category Name</label>
+		                                <input class="form-control" type="text" name="name" value="${category.name}" required>
+	                                </div>
+	                                <div class="form-group">
+		                                <label>Description</label>
+		                                <textarea rows="10" class="form-control" name="description">${category.description}</textarea>
+	                                </div>
+	                                <input type="hidden" name="categoryid" value="${category.id}">
+	                                <input type="hidden" name="action" value="updatecat">
+	                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div>
+    
 	<!-- footer -->
 <jsp:include page="footer.jsp"></jsp:include>
 
