@@ -18,7 +18,11 @@ import javax.websocket.Session;
 import uet.jcia.shop.model.Account;
 import uet.jcia.shop.model.AccountManager;
 import uet.jcia.shop.model.AccountType;
+import uet.jcia.shop.model.Order;
+import uet.jcia.shop.model.OrderDetails;
+import uet.jcia.shop.model.OrderManager;
 import uet.jcia.shop.model.Product;
+import uet.jcia.shop.model.ProductManager;
 
 /**
  * Servlet implementation class AccountService
@@ -27,6 +31,8 @@ import uet.jcia.shop.model.Product;
 public class AccountService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private AccountManager accountManager = new AccountManager();
+    private OrderManager om = new OrderManager();
+    private ProductManager pm = new ProductManager();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -158,6 +164,23 @@ public class AccountService extends HttpServlet {
 			}
 			
 			destination = "/change-pass.jsp" ;
+		}
+		else if(action.equalsIgnoreCase("history")) {
+			destination = "/history.jsp";
+			Account acc = (Account) session.getAttribute("account");
+			
+			if(acc == null) {
+				destination = "/login.jsp";
+				forwardStream(request, response, destination);
+				return;
+			}
+			
+			AccountType type = acc.getAccountType();
+			if(type != AccountType.CUSTOMER) return;
+
+			List<Order> orderList = om.getOrderListByCustomerId(acc.getId());
+			
+			request.setAttribute("orderlist", orderList);
 		}
 		
 		if(destination != null){

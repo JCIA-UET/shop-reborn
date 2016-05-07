@@ -91,6 +91,12 @@ public class Order extends Item {
 
 	
 
+	@Override
+	public String toString() {
+		return "Order [accountId=" + accountId + ", receivedAddress=" + receivedAddress + ", date=" + date + ", total="
+				+ total + ", note=" + note + ", status=" + status + ", orderDetails=" + orderDetails + "]";
+	}
+
 	public Timestamp getOrderDate() {
 		return date;
 	}

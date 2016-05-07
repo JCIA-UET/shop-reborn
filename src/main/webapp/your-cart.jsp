@@ -64,7 +64,7 @@
 										<td class="tb-cnt-act">
 											<form action="TransactionService" id="updateform" method="post">
 												<input type="hidden" name="productid" value="${p.id}"/>
-												<input type="hidden" id="qttinput" name="qtt"/>
+												<input type="hidden" id="qttinput" name="qtt" value="${p.quantity}"/>
 												<input type="hidden" name="action" value="update"/>
 												<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Update">
 													<span class="glyphicon glyphicon-refresh"></span>

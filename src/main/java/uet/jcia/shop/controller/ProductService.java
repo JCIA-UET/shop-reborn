@@ -1,6 +1,7 @@
 package uet.jcia.shop.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,9 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import uet.jcia.shop.model.Category;
 import uet.jcia.shop.model.CategoryManager;
 import uet.jcia.shop.model.Item;
+import uet.jcia.shop.model.OrderDetails;
+import uet.jcia.shop.model.OrderManager;
 import uet.jcia.shop.model.Product;
 import uet.jcia.shop.model.ProductManager;
 
@@ -24,6 +29,7 @@ import uet.jcia.shop.model.ProductManager;
 public class ProductService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProductManager pm;
+    private OrderManager om;
     
     public ProductService() {
         super();
@@ -33,6 +39,7 @@ public class ProductService extends HttpServlet {
     public void init() throws ServletException {
     	super.init();
     	pm = new ProductManager();
+    	om = new OrderManager();
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse rsp) throws ServletException, IOException {
@@ -104,6 +111,31 @@ public class ProductService extends HttpServlet {
 			}
 			
 			req.setAttribute("productname", input);
+		}
+		else if (action.equalsIgnoreCase("gpboid")) {
+			String szOrderid = req.getParameter("orderid");
+			int orderid = Integer.parseInt(szOrderid);
+			List<Product> pdtList = new ArrayList<>();
+			
+			List<OrderDetails> ods = om.GetDetailsById(orderid);
+			if(!ods.isEmpty()) {
+				for (OrderDetails od : ods) {
+					Product product = (Product) pm.getItemById(od.getProductId());
+					if(product == null) continue;
+					else {
+						product.setQuantity(od.getQuantity());
+						pdtList.add(product);
+					}
+				}
+			}
+			
+			String json = new Gson().toJson(pdtList);
+			
+			rsp.setContentType("application/json");
+			rsp.setCharacterEncoding("UTF-8");
+			rsp.getWriter().write(json);
+			System.out.println(json);
+			return;
 		}
 		
 		forwardStream(req, rsp, destination);

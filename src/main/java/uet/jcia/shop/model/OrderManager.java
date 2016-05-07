@@ -14,19 +14,21 @@ import java.util.List;
 
 public class OrderManager implements ItemManager {
 	private Connection conn = null;
+	private ProductManager pm = new ProductManager();
 	
-	private final String GET_ORDER_BY_ID_QUERY  		= "SELECT * FROM `order` WHERE orderId=?";
-	private final String GET_ALL_ORDERS_QUERY   		= "SELECT * FROM `order`";
-	private final String GET_DETAILS_BY_ORDER_ID_QUERY 	= "SELECT * FROM orderdetail WHERE orderId=?";
-	private final String DELETE_ORDER_BY_ID_QUERY    	= "DELETE FROM `order` WHERE orderId=?";
-	private final String ADD_NEW_ORDER_QUERY	 		= "INSERT INTO `order` (accountId, receivedAddress, date, total, note, status) VALUES(?,?,?,?,?,?)";
-	private final String ADD_NEW_ORDERDETAIL_QUERY		= "INSERT INTO orderdetail (orderId, productId, quantity) VALUES (?,?,?)";
-	private final String GET_TOP_SELLING_PRODUCT_QUERY 	= "SELECT product.productID, SUM(orderdetail.Quantity) AS Quantity FROM orderdetail INNER JOIN product ON product.productID = orderdetail.productID GROUP BY orderdetail.productID ORDER BY Quantity DESC LIMIT ?";
-	private final String GET_REVENUE_IN_DAY_QUERY 		= "SELECT DATE(orderDate) AS Date, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate)=? GROUP BY orderId, orderdetail.productID";
-	private final String GET_REVENUE_IN_MONTH_QUERY		= "SELECT MONTH(DATE(orderDate)) as Month, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate) BETWEEN ? AND ? GROUP BY orderId, orderdetail.productID";
-	private final String GET_TOTAL_REVENUE_QUERY		= "SELECT orderdetail.quantity, SUM(orderdetail.quantity * product.price) as Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID GROUP BY orderId, orderdetail.productID";
-	private final String GET_LAST_ORDER_QUERY 			= "SELECT * FROM `order` ORDER BY orderID DESC LIMIT 1";
-	private final String DELETE_ORDER_DETAIL_BY_ORDER_ID= "DELETE FROM orderDetail WHERE orderId=?";
+	private final String GET_ORDER_BY_ID_QUERY  			= "SELECT * FROM `order` WHERE orderId=?";
+	private final String GET_ORDERS_BY_CTMERID_QUERY		= "SELECT * FROM mydb.`order` WHERE accountId=?";
+	private final String GET_ALL_ORDERS_QUERY   			= "SELECT * FROM `order`";
+	private final String GET_DETAILS_BY_ORDER_ID_QUERY 		= "SELECT * FROM orderdetail WHERE orderId=?";
+	private final String DELETE_ORDER_BY_ID_QUERY    		= "DELETE FROM `order` WHERE orderId=?";
+	private final String ADD_NEW_ORDER_QUERY	 			= "INSERT INTO `order` (accountId, receivedAddress, date, total, note, status) VALUES(?,?,?,?,?,?)";
+	private final String ADD_NEW_ORDERDETAIL_QUERY			= "INSERT INTO orderdetail (orderId, productId, quantity) VALUES (?,?,?)";
+	private final String GET_TOP_SELLING_PRODUCT_QUERY 		= "SELECT product.productID, SUM(orderdetail.Quantity) AS Quantity FROM orderdetail INNER JOIN product ON product.productID = orderdetail.productID GROUP BY orderdetail.productID ORDER BY Quantity DESC LIMIT ?";
+	private final String GET_REVENUE_IN_DAY_QUERY 			= "SELECT DATE(orderDate) AS Date, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate)=? GROUP BY orderId, orderdetail.productID";
+	private final String GET_REVENUE_IN_MONTH_QUERY			= "SELECT MONTH(DATE(orderDate)) as Month, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate) BETWEEN ? AND ? GROUP BY orderId, orderdetail.productID";
+	private final String GET_TOTAL_REVENUE_QUERY			= "SELECT orderdetail.quantity, SUM(orderdetail.quantity * product.price) as Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID GROUP BY orderId, orderdetail.productID";
+	private final String GET_LAST_ORDER_QUERY 				= "SELECT * FROM `order` ORDER BY orderID DESC LIMIT 1";
+	private final String DELETE_ORDER_DETAIL_BY_ORDER_ID	= "DELETE FROM orderDetail WHERE orderId=?";
 	/**
 	 * get order 
 	 * 
@@ -179,7 +181,7 @@ public class OrderManager implements ItemManager {
 		}
 
 	}
-
+	
 	/**
 	 * get all details in an order
 	 * 
@@ -218,16 +220,26 @@ public class OrderManager implements ItemManager {
 	
 	public boolean addOrderDetailToDB(OrderDetails detail) {
 		conn = dbConnector.createConnection();
+		int orderid = detail.getOrderId();
+		int productid = detail.getProductId();
 		
 		try {
 			PreparedStatement stt = conn.prepareStatement(ADD_NEW_ORDERDETAIL_QUERY);
 			stt.setInt(1, detail.getOrderId());
 			stt.setInt(2, detail.getProductId());
 			stt.setInt(3, detail.getQuantity());
-			
-			System.out.println(detail.getOrderId() + "-----------");
-			
 			stt.executeUpdate();
+			
+			Product prd = (Product) pm.getItemById(productid);
+			double cash = prd.getPrice() * detail.getQuantity();
+			Order order = (Order) this.getItemById(orderid);
+			
+			String sql = "UPDATE `order` SET total = ? where orderId= ?";
+			PreparedStatement stt1 = conn.prepareStatement(sql);
+			stt1.setDouble(1, cash);
+			stt1.setInt(2, orderid);
+			stt1.executeUpdate();
+			
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -298,9 +310,44 @@ public class OrderManager implements ItemManager {
 		return id;
 	}
 	
+	public List<Order> getOrderListByCustomerId(int customerid) {
+		conn = dbConnector.createConnection();
+		List<Order> orderList = new ArrayList<>();
+		Order order = null;
+		
+		try {
+			PreparedStatement stt = conn.prepareStatement(GET_ORDERS_BY_CTMERID_QUERY);
+			stt.setInt(1, customerid);
+			ResultSet rs = stt.executeQuery();
+			
+			while(rs.next()) {
+				int orderid = rs.getInt(1);
+				int accountid = rs.getInt(2);
+				String address = rs.getString(3);
+				Timestamp date = rs.getTimestamp(4);
+				double total = rs.getDouble(5);
+				String note = rs.getString(6);
+				String statusStr = rs.getString(7);
+				OrderStatus status = OrderStatus.valueOf(statusStr);
+				List<OrderDetails> details = this.GetDetailsById(orderid);
+				
+				order = new Order(orderid, accountid, address, date, total, note, status, details);
+				System.out.println("Order: " + order);
+				orderList.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return orderList;
+	}
+	
 	public Order getLastOrder() {
 		conn = dbConnector.createConnection();
 		Order order = null;
+		List<OrderDetails> details = null;
+		
 		try {
 			PreparedStatement stt = conn.prepareStatement(GET_LAST_ORDER_QUERY);
 			ResultSet rs = stt.executeQuery();
@@ -313,8 +360,9 @@ public class OrderManager implements ItemManager {
 				String note = rs.getString(6);
 				String statusStr = rs.getString(7);
 				OrderStatus status = OrderStatus.valueOf(statusStr);
+				details = this.GetDetailsById(orderId);
 				
-				order = new Order(orderId, accountId, address, date, total, note, status, null);
+				order = new Order(orderId, accountId, address, date, total, note, status, details);
 				
 			}
 		} catch (SQLException e) {
@@ -380,6 +428,7 @@ public class OrderManager implements ItemManager {
 			//ket thuc phan them vao
 		}
 		
+		order.setOrderDetails(GetDetailsById(orderId));
 		return orderId;
 	}
 	

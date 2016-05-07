@@ -47,7 +47,7 @@
 	          		<c:choose>
 	          			<c:when test="${not empty sessionScope.account}">
 					    	<li><a href="#"  onclick="account('change')">My Account</a></li>
-					    	<li><a href="#">Order History</a></li>
+					    	<li><a href="#" onclick="account('history')">Order History</a></li>
 						    <li role="separator" class="divider"></li>
 						    <li><a href="#" onclick="account('changePass')">Change PassWord</a></li>
 						    <li><a href="#" onclick="account('out')">Logout</a></li>
@@ -179,6 +179,10 @@
 		}
 		if(ac == "changePass"){
 			document.getElementById("action").value ="changePassword";
+			document.getElementById("logoutform").submit();
+		}
+		if(ac == "history"){
+			document.getElementById("action").value = "history";
 			document.getElementById("logoutform").submit();
 		}
 	}

@@ -2,6 +2,8 @@ package uet.jcia.shop.model;
 
 public class OrderDetails extends Item {
 	
+	
+
 	/**
 	 * order id for this order detail
 	 */
@@ -56,5 +58,8 @@ public class OrderDetails extends Item {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+	@Override
+	public String toString() {
+		return "OrderDetails [orderId=" + orderId + ", productId=" + productId + ", quantity=" + quantity + "]";
+	}
 }
