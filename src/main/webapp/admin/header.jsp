@@ -109,7 +109,7 @@
                             <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Statistic<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Products</a>
+                                    <a href="StatisService?action=gts&number=10">Products</a>
                                 </li>
                                 <li>
                                     <a href="#">Sales</a>
