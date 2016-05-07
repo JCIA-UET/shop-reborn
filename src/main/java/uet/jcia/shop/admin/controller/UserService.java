@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uet.jcia.shop.controller.MessageType;
 import uet.jcia.shop.model.Account;
 import uet.jcia.shop.model.AccountManager;
 
@@ -58,7 +59,7 @@ public class UserService extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		String message;
+		String message =null;
 		String destination = null;
 		if(action==null) return;
 		if(action.equalsIgnoreCase("update-user")){
@@ -73,8 +74,16 @@ public class UserService extends HttpServlet {
 			account.setPhone(phone);
 			account.setAddress(address);
 			account.setCity(city);
-			accountManager.updateAccount(id, account);
-			request.setAttribute("account", account);
+			boolean test = accountManager.updateAccount(id, account);
+			if(test){
+				request.setAttribute("account", account);
+				message = "update user successfull";
+				request.setAttribute("messageType", MessageType.SUCCESS);
+			}
+			else{
+				message = "update user fails";
+				request.setAttribute("messageType", MessageType.ERROR);
+			}
 			destination = "/admin/update-user.jsp";
 		}
 		else if(action.equalsIgnoreCase("removeUser")){
@@ -82,15 +91,18 @@ public class UserService extends HttpServlet {
 			int id = Integer.parseInt(idString);
 			boolean remove = accountManager.removeAccountById(id);
 			if(remove){
+				request.setAttribute("messageType", MessageType.SUCCESS);
 				message = "remove Successfull!!";
 				destination="/admin/users.jsp";
 			}
 			else{
+				request.setAttribute("messageType", MessageType.ERROR);
 				message ="Sorry, remove fail !!";
 				destination = "/admin/users.jsp";
 			}
 		}
 		if(destination!=null){
+			request.setAttribute("message", message);
 			forwardStream(request, response, destination);
 		}
 	}
