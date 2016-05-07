@@ -55,7 +55,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/shop/index.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -121,7 +121,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Users</a>
+                            <a href="UserService?action=gallcus"><i class="fa fa-user fa-fw"></i> Users</a>
                         </li>
                         
                     </ul>

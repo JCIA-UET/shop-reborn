@@ -1,6 +1,8 @@
 package uet.jcia.shop.model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manager for Account entity
@@ -154,7 +156,7 @@ public class AccountManager {
  		return true;
 	}
 	public boolean updateAccount(int id, Account account){
-		String sqlCommand = "UPDATE account Set realName= ? , phone=? , city = ? , address=?,password=? WHERE accountId = ?; ";
+		String sqlCommand = "UPDATE account Set realName= ? , phone=? , city = ? , address= ? , password= ? WHERE accountId = ?; ";
 		PreparedStatement pst ; 
 		conn = dbconnector.createConnection();
 		try {
@@ -176,6 +178,70 @@ public class AccountManager {
 		
 		
 	}
+	public List<Account> getAllCustomer(){
+		List<Account> list = new ArrayList<>();
+		String sqlCommand = "select * from account where account.accountType = 'CUSTOMER' order by username;";
+		PreparedStatement pst ; 
+		ResultSet rs = null ; 
+		conn = dbconnector.createConnection();
+		try {
+			pst = conn.prepareStatement(sqlCommand);
+			rs = pst.executeQuery();
+			while(rs.next()){
+				int accountId = rs.getInt(1);
+				String username = rs.getString(2);
+				String password = rs.getString(3);
+				String realName = rs.getString(4);
+				String phone = rs.getString(5);
+				String city = rs.getString(6);
+				String address = rs.getString(7);
+				String accountTypeStr = rs.getString(8);
+				
+				AccountType accType = AccountType.valueOf(accountTypeStr); 
+						
+				 Account account = new Account(accountId, username, password, realName,
+						phone, city, address, accType);
+				 list.add(account);
+			}
+			conn.close();
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}	
+	}
+	
+	public boolean removeAccountById(int id){
+		if (getAccountById(id) == null) {
+			return false;
+		}
+		try {
+			conn = dbconnector.createConnection();
+			String query = "delete from account " +
+							"where accountId= ?";
+			
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
+			statement.execute();
+
+			conn.close();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+//	public static void main(String[] args) {
+//		AccountManager test = new AccountManager();
+//		List<Account> test1 = test.getAllCustomer();
+//		for (Account account : test1) {
+//			System.out.println(account.getUsername());
+//		}
+//	}
 }
 
 	
