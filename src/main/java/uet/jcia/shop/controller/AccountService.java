@@ -45,7 +45,9 @@ public class AccountService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		forwardStream(request, response, "/register.jsp");
+
 	}
 
 	/**
@@ -65,21 +67,27 @@ public class AccountService extends HttpServlet {
 			String password = request.getParameter("password");
 			Account account = accountManager.authenticate(username, password);
 			if(account!=null){
-				List<Product> cart = (List<Product>) session.getAttribute("cart");
-				
-				if(cart != null && !cart.isEmpty()) {
-					destination = "your-cart.jsp";
+				if(account.getAccountType().equals(AccountType.CUSTOMER)){
+					List<Product> cart = (List<Product>) session.getAttribute("cart");
+					
+					if(cart != null && !cart.isEmpty()) {
+						destination = "your-cart.jsp";
+					}
+					else {
+						cart = new ArrayList<Product>();
+						destination = "index.jsp";
+					}
+					
+					session.setAttribute("cart", cart);
+					session.setAttribute("account", account);
+					response.sendRedirect(destination);
+					destination = null;
 				}
-				else {
-					cart = new ArrayList<Product>();
-					destination = "index.jsp";
+				else{
+					destination = "admin/index.jsp";
+					response.sendRedirect(destination);
+					destination = null;
 				}
-				
-				session.setAttribute("cart", cart);
-				session.setAttribute("account", account);
-				ServletContext context = getServletContext();
-				response.sendRedirect(destination);
-				destination = null;
 			}
 			else {
 				messageType = MessageType.ERROR;
@@ -190,7 +198,6 @@ public class AccountService extends HttpServlet {
 		}
 		
 	}
-	
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)
 			throws ServletException, IOException {
 		
