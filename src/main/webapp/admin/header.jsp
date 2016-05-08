@@ -55,8 +55,11 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/shop/index.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="#" onclick="document.getElementById('logoutform').submit();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
+                        <form action="../AccountService" method="post" id="logoutform">
+                        	<input type="hidden" name="action" value="logout">
+                        </form>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

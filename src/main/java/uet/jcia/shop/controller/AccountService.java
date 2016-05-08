@@ -67,6 +67,8 @@ public class AccountService extends HttpServlet {
 			String password = request.getParameter("password");
 			Account account = accountManager.authenticate(username, password);
 			if(account!=null){
+				session.setAttribute("account", account);
+				
 				if(account.getAccountType().equals(AccountType.CUSTOMER)){
 					List<Product> cart = (List<Product>) session.getAttribute("cart");
 					
@@ -79,12 +81,11 @@ public class AccountService extends HttpServlet {
 					}
 					
 					session.setAttribute("cart", cart);
-					session.setAttribute("account", account);
 					response.sendRedirect(destination);
 					destination = null;
 				}
 				else{
-					destination = "admin/index.jsp";
+					destination = "admin/";
 					response.sendRedirect(destination);
 					destination = null;
 				}
