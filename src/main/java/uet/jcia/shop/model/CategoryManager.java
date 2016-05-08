@@ -209,6 +209,31 @@ public class CategoryManager implements ItemManager {
 
 	}
 
+	public String getNameById(int id) {
+		try {
+			con = dbConnector.createConnection();
+			String query = "select name from category " +
+							"where categoryID= ?";
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setInt(1, id);
+			
+			ResultSet rs = statement.executeQuery();
+			String name = null;
+			
+			if (rs.next()) {
+				name = rs.getString(1);
+			}
+			
+			con.close();
+			return name;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	@Override
 	public List<Item> searchItemByName(String name) {
 		// TODO Auto-generated method stub

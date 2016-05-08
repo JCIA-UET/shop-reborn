@@ -51,12 +51,18 @@ public class AdProductService extends HttpServlet {
 		
 		// Get ALL Products
 		if (action.equalsIgnoreCase("gallp")) {
-			List<Item> productsList = pm.getAllItems();
+			List<Product> productsList = (List<Product>)(List<?>) pm.getAllItems();
+			
 			if (productsList == null) {
 				req.setAttribute("messageType", MessageType.ERROR);
 				req.setAttribute("message", "Error when get products list");
 				
 			} else {
+				for (Product p : productsList) {
+					String catName = cm.getNameById(p.getCategoryId());
+					p.setCategoryName(catName);
+				}
+				
 				req.setAttribute("productsList", productsList);
 			}
 			

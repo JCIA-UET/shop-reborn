@@ -94,13 +94,13 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Sale<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Sales<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Order</a>
                                 </li>
                                 <li>
-                                    <a href="#">Customer</a>
+                                    <a href="UserService?action=gallcus">Customer</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -109,19 +109,19 @@
                             <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Statistic<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="StatisService?action=gts&number=10">Products</a>
+                                    <a href="StatisService?action=gts&number=10">Product</a>
                                 </li>
                                 <li>
                                     <a href="#">Sales</a>
                                 </li>
                                 <li>
-                                    <a href="#">Customers</a>
+                                    <a href="#">Customer</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="UserService?action=gallcus"><i class="fa fa-user fa-fw"></i> Users</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Users</a>
                         </li>
                         
                     </ul>

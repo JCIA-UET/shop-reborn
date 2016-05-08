@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>user</title>
+    <title>Customers</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-	<h1 class="page-header">Admin User</h1>
+	<h1 class="page-header">Customers List</h1>
 	<table id="tableUser" class="table table-striped table-borderd">
 		<thead>
                <tr>

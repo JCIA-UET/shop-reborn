@@ -52,7 +52,7 @@
                     		<c:forEach var="p" items="${productsList}">
                     			<tr>
                     				<td>${p.name}</td>
-                    				<td>${p.categoryId}</td>
+                    				<td>${p.categoryName}</td>
                     				<td><fmt:formatNumber type="currency" value="${p.price}"></fmt:formatNumber></td>
                     				<td class="text-right">${p.quantity}</td>
                     				<td class="text-right">

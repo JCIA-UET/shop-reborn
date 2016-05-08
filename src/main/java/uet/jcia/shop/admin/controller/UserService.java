@@ -43,14 +43,14 @@ public class UserService extends HttpServlet {
 		if(action.equalsIgnoreCase("gallcus")){
 			List<Account> listAccount = accountManager.getAllCustomer();
 			request.setAttribute("listAccount", listAccount);
-			forwardStream(request, response, "/admin/users.jsp");
+			forwardStream(request, response, "/admin/customers-list.jsp");
 		}
 		else if(action.equalsIgnoreCase("gusbid")){
 				String id = request.getParameter("userid");
 				int id1 = Integer.parseInt(id);
 				Account account = accountManager.getAccountById(id1);
 				request.setAttribute("account", account);
-				forwardStream(request, response, "/admin/update-user.jsp");
+				forwardStream(request, response, "/admin/update-customer.jsp");
 			}
 	}
 
@@ -84,7 +84,7 @@ public class UserService extends HttpServlet {
 				message = "update user fails";
 				request.setAttribute("messageType", MessageType.ERROR);
 			}
-			destination = "/admin/update-user.jsp";
+			destination = "/admin/update-customer.jsp";
 		}
 		else if(action.equalsIgnoreCase("removeUser")){
 			String idString = request.getParameter("userid");
@@ -93,13 +93,14 @@ public class UserService extends HttpServlet {
 			if(remove){
 				request.setAttribute("messageType", MessageType.SUCCESS);
 				message = "remove Successfull!!";
-				destination="/admin/users.jsp";
 			}
 			else{
 				request.setAttribute("messageType", MessageType.ERROR);
 				message ="Sorry, remove fail !!";
-				destination = "/admin/users.jsp";
+
 			}
+			
+			destination = "/admin/customers-list.jsp";
 		}
 		if(destination!=null){
 			request.setAttribute("message", message);

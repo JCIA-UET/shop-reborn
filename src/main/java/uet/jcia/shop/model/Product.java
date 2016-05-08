@@ -40,6 +40,8 @@ public class Product extends Item {
 	 */
 	private String imageLink;
 	
+	private String categoryName;
+	
 	public Product() {
 		
 	}
@@ -126,4 +128,11 @@ public class Product extends Item {
 				+ description + ", id=" + id + ", name=" + name + "]";
 	}	
 	
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
 }
