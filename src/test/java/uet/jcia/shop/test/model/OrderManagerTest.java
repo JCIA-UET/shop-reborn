@@ -41,7 +41,7 @@ public class OrderManagerTest {
 		//orderManager.getTopSellingProduct(10);
 		
 //		Order order = new Order();
-//		OrderManager orM=new OrderManager();
+		OrderManager orM=new OrderManager();
 //		Account acc=new Account(null, null, "vu", null, null, null, null);
 //		Product product=new Product("toy", 1, 0, 0, null, null);
 //		List<Product> e=new ArrayList<>();
@@ -49,5 +49,9 @@ public class OrderManagerTest {
 //		
 //		int re=orM.makeOrder(null, null, acc, e);
 //		System.out.println(re);
+		
+		System.out.println(orM.countItems());
+		
+		
 	}
 }

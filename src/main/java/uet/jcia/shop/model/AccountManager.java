@@ -235,6 +235,27 @@ public class AccountManager {
 		
 	}
 	
+	public int countItems() {
+		conn = dbconnector.createConnection();
+		int count = -1;
+		
+		try {
+			PreparedStatement stt = conn.prepareStatement("SELECT COUNT(*) FROM `account` WHERE accountType = \'CUSTOMER\'");
+			ResultSet rs = stt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+			conn.close();
+			return count;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+			
+		}
+	}
+	
 //	public static void main(String[] args) {
 //		AccountManager test = new AccountManager();
 //		List<Account> test1 = test.getAllCustomer();

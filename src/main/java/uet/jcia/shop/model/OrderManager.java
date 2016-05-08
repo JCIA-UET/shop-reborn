@@ -590,6 +590,27 @@ public class OrderManager implements ItemManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public int countItems() {
+		conn = dbConnector.createConnection();
+		int count = -1;
+		
+		try {
+			PreparedStatement stt = conn.prepareStatement("SELECT COUNT(*) FROM `order`");
+			ResultSet rs = stt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+			conn.close();
+			return count;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+			
+		}
+	}
 
 }
 
