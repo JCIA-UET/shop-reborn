@@ -77,8 +77,7 @@ public class OrderManager implements ItemManager {
 	/**
 	 * get all products in an order
 	 * 
-	 * @param id                    id of order want to get details
-	 * @return List<OrderDetails>   list of item in order
+	 * @return List   list of item in order
 	 */
 	@Override
 	public List<Item> getAllItems() {
