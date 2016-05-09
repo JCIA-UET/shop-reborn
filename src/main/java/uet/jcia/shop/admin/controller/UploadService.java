@@ -1,5 +1,6 @@
 package uet.jcia.shop.admin.controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,21 +36,14 @@ public class UploadService extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-    	try {
-			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-			InputStream is = classLoader.getResourceAsStream("path.properties");
-			Properties p = new Properties();
-			p.load(is);
-			productDataPath = p.getProperty("productData");
-			is.close();
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			
-		}
+    	ServletContext ctx = getServletContext();
+    	productDataPath = ctx.getContextPath() + File.separator + 
+    			"img" + File.separator +
+    			"product" + File.separator;
+    	
+    	File file = new File(productDataPath);
+    	if(!file.exists()) file.mkdirs();
+    			 
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import uet.jcia.shop.controller.MessageType;
 import uet.jcia.shop.model.Account;
 import uet.jcia.shop.model.AccountManager;
+import uet.jcia.shop.model.AccountType;
 
 /**
  * Servlet implementation class UserService
@@ -41,7 +42,7 @@ public class UserService extends HttpServlet {
 		}
 		
 		if(action.equalsIgnoreCase("gallcus")){
-			List<Account> listAccount = accountManager.getAllCustomer();
+			List<Account> listAccount = accountManager.getAllAccounts(AccountType.CUSTOMER);
 			request.setAttribute("listAccount", listAccount);
 			forwardStream(request, response, "/admin/customers-list.jsp");
 		}

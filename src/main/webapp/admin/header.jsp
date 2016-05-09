@@ -124,7 +124,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Users</a>
+                            <a href="AdEmployeeService?action=galle"><i class="fa fa-user fa-fw"></i> Employees</a>
                         </li>
                         
                     </ul>

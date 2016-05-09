@@ -131,5 +131,12 @@ public class Account {
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", realName=" + realName
+				+ ", phone=" + phone + ", city=" + city + ", address=" + address + ", accountType=" + accountType + "]";
+	}
+	
 	
 }

@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Customers</title>
+    <title>Employees</title>
 
     <link href="../assests/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assests/css/metisMenu.min.css" rel="stylesheet">
@@ -26,11 +26,12 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-	<h1 class="page-header">Customers List</h1>
-	<a href="../register.jsp">
+	<h1 class="page-header">Employees List</h1>
+	
+    <a href="new-employee.jsp">
     	<button class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
     </a>
-    
+	
 	<table id="tableUser" class="table table-striped table-borderd">
 		<thead>
                <tr>
@@ -38,26 +39,29 @@
 		           <th>Username</th>
 		           <th>Real Name</th>
 		           <th>Phone</th>
-		            <th>City</th>
+		           <th>City</th>
+		           <th>Role</th> 
+		           <th class="text-right">Action</th>
                </tr>
         </thead>
 	
 	<tbody>
-		<c:forEach var="account" items="${listAccount}">
+		<c:forEach var="e" items="${employees}">
 			<tr>
-				<td>${account.getId()}</td>
-				<td>${account.getUsername()}</td>
-				<td>${account.getRealName()}</td>
-				<td>${account.getPhone()}</td>
-				<td>${account.getCity()}</td>
+				<td>${e.getId()}</td>
+				<td>${e.getUsername()}</td>
+				<td>${e.getRealName()}</td>
+				<td>${e.getPhone()}</td>
+				<td>${e.getCity()}</td>
+				<td>${e.accountType}</td>
 				<td class="text-right">
-                    <a href="UserService?action=gusbid&userid=${account.id}">
+                    <a href="AdEmployeeService?action=gebyid&eid=${e.id}">
 	                   <button class="btn btn-primary"><span class="fa fa-pencil-square-o"></span></button>
 	                 </a>
-	                  <button onclick="document.getElementById('removeform${account.id}').submit();" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-	                  	<form action="UserService" method="post" id="removeform${account.id}">
-	                    					<input type="hidden" name="userid" value="${account.id}">
-	                    					<input type="hidden" name="action" value="removeUser">
+	                  <button onclick="document.getElementById('removeform${e.id}').submit();" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+	                  	<form action="AdEmployeeService" method="post" id="removeform${e.id}">
+	                    	<input type="hidden" name="eid" value="${e.id}">
+	                    	<input type="hidden" name="action" value="remove">
 	                    </form>			
 	           
                  </td>				
