@@ -118,7 +118,7 @@
                                     <a href="#">Sales</a>
                                 </li>
                                 <li>
-                                    <a href="#">Customer</a>
+                                    <a href="StatisService?action=gtc&threshold=10">Customer</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
