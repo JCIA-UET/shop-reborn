@@ -85,4 +85,8 @@ public class DBConnector {
 			return null;
 		}
 	}
+	
+	public Connection getCon() {
+		return con;
+	}
 }

@@ -218,11 +218,12 @@ public class OrderManager implements ItemManager {
 	}
 	
 	public boolean addOrderDetailToDB(OrderDetails detail) {
-		conn = dbConnector.createConnection();
+		
 		int orderid = detail.getOrderId();
 		int productid = detail.getProductId();
 		
 		try {
+			conn = dbConnector.createConnection();
 			PreparedStatement stt = conn.prepareStatement(ADD_NEW_ORDERDETAIL_QUERY);
 			stt.setInt(1, detail.getOrderId());
 			stt.setInt(2, detail.getProductId());
@@ -232,26 +233,20 @@ public class OrderManager implements ItemManager {
 			Product prd = (Product) pm.getItemById(productid);
 			double cash = prd.getPrice() * detail.getQuantity();
 			Order order = (Order) this.getItemById(orderid);
-			
+			conn.close();
+			conn = dbConnector.createConnection();
 			String sql = "UPDATE `order` SET total = ? where orderId= ?";
 			PreparedStatement stt1 = conn.prepareStatement(sql);
 			stt1.setDouble(1, cash);
 			stt1.setInt(2, orderid);
 			stt1.executeUpdate();
 			
+			conn.close();
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	/**
@@ -293,18 +288,10 @@ public class OrderManager implements ItemManager {
 			if (keys.next()) {
 				id = keys.getInt(1);
 			}
-			
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		return id;
 	}
@@ -389,45 +376,40 @@ public class OrderManager implements ItemManager {
 				totalBilling, orderNote, OrderStatus.PENDING, null);
 		
 		int orderId = addItem(order);
-		conn = dbConnector.createConnection();
+		
 		for (Product p : products) {
 			int pId = p.getId();
 			int boughtQuantity = p.getQuantity();
 			OrderDetails orderDetails = new OrderDetails(orderId, pId, boughtQuantity);
 			addOrderDetailToDB(orderDetails);
+		
 			// phan vua moi them vao
 			try {
 				//lay gia tri dang co trong kho
+				conn = dbConnector.createConnection();
 				String sql = "select * from product where productID = "+ pId;
 				Statement statement = conn.createStatement();
 				ResultSet rs = statement.executeQuery(sql);
-				int quantity= rs.getInt(4);
+				rs.next();
+				int totalQuantity= rs.getInt(4);
 				//update quantity trong kho sau khi add product vao order( - quantity trong order) 
 				String query  = "update product " + 
-					"set " +
-					"quantity= ? " +
-					"where productID= ?";
-			
-				PreparedStatement ps = conn.prepareStatement(query);
-				ps.setInt(1, quantity-p.getQuantity());
-				ps.setInt(2, pId);
-				ps.executeQuery();
+						"set " +
+						"quantity= ? " +
+						"where productID= ?";
 				
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setInt(1, totalQuantity - p.getQuantity());
+				ps.setInt(2, pId);
+				ps.executeUpdate();
+				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("error : "+ e.getMessage());
-			}
-			finally{
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				e.printStackTrace();
 			}
 			//ket thuc phan them vao
 		}
 		
-		order.setOrderDetails(GetDetailsById(orderId));
+//		order.setOrderDetails(GetDetailsById(orderId));
 		return orderId;
 	}
 	

@@ -42,15 +42,14 @@ public class OrderManagerTest {
 		
 //		Order order = new Order();
 		OrderManager orM=new OrderManager();
-//		Account acc=new Account(null, null, "vu", null, null, null, null);
-//		Product product=new Product("toy", 1, 0, 0, null, null);
-//		List<Product> e=new ArrayList<>();
-//		e.add(product);
-//		
-//		int re=orM.makeOrder(null, null, acc, e);
-//		System.out.println(re);
+		AccountManager am = new AccountManager();
+		Account acc = am.getAccountById(2);
+		Product product=new Product(1, null, 1, 0, 0, null, null);
+		List<Product> e=new ArrayList<>();
+		e.add(product);
 		
-		System.out.println(orM.getTopCustomers(3));
+		int re=orM.makeOrder("note", "Vinh City", acc, e);
+		System.out.println(re);
 		
 		
 	}
