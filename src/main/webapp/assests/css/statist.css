@@ -1,0 +1,29 @@
+.items-collection{
+    margin:20px 0 0 0;
+}
+input[type=checkbox] + label{
+    width:90%;
+    border:1px solid #337ab7;
+    margin:5px; 
+    border-radius: 17px;
+    color: #305891;
+}
+input[type=checkbox]:checked + label{
+    background-color:#007ba7;
+    color:#FFF;
+}
+
+.items-collection label .itemcontent{
+    width:100%;
+}
+.items-collection .btn-group{
+    width:90%
+}
+input[type=checkbox]{
+ 	position: absolute;
+   	top: -9999px;
+   	left: -9999px;
+}
+#day-selector, #month-selector, #year-selector {
+	margin: 20px 0px;
+}

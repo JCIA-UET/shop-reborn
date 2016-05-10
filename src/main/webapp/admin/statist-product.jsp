@@ -31,7 +31,7 @@
 		<div class="col-md-2">
 			<h4>TOP BEST SALE</h4>
 		</div>
-		<form action="StatisService" method="get">
+		<form action="StatistService" method="post">
 		<div class="col-md-2">
 			<select class="form-control" id="sel1" name="number">
 			    <option>5</option>

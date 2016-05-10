@@ -109,7 +109,7 @@
                             <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Statistic<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="StatisService?action=gts&number=10">Product</a>
+                                    <a href="statist-product.jsp">Product</a>
                                 </li>
                                 <li>
                                     <a href="#">Sales</a>
