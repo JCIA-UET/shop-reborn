@@ -29,6 +29,7 @@
 	<h1 class="page-header">Top buying Customers</h1>
 	<div class=row>
 		<form action="StatisService" method="get">
+		<input type="hidden" name="action" value="gtc">
 		<div class="col-md-2">
 			<select class="form-control" id="sel1" name="threshold">
 			    <option>5</option>
@@ -43,7 +44,6 @@
 			    <option>50</option>
 			 </select>
 		</div>
-		<input type="hidden" name="action" value="gts">
 		<div class="col-md-1">
 			<button class="btn btn-primary" type="submit">Sort</button>
 		</div>
