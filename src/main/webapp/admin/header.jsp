@@ -55,8 +55,11 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/shop/index.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="#" onclick="document.getElementById('logoutform').submit();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
+                        <form action="../AccountService" method="post" id="logoutform">
+                        	<input type="hidden" name="action" value="logout">
+                        </form>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -115,13 +118,13 @@
                                     <a href="#">Sales</a>
                                 </li>
                                 <li>
-                                    <a href="#">Customer</a>
+                                    <a href="StatisService?action=gtc&threshold=10">Customer</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Users</a>
+                            <a href="AdEmployeeService?action=galle"><i class="fa fa-user fa-fw"></i> Employees</a>
                         </li>
                         
                     </ul>

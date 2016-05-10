@@ -178,9 +178,38 @@ public class AccountManager {
 		
 		
 	}
-	public List<Account> getAllCustomer(){
+
+	public boolean updateEmployee (int id, Account account){
+		String sqlCommand = "UPDATE account Set username=?, password=?,"
+				+ " realName= ? , phone=? , city = ? , address= ?, accountType= ? WHERE accountId = ?; ";
+		PreparedStatement pst ; 
+		conn = dbconnector.createConnection();
+		try {
+			pst = conn.prepareStatement(sqlCommand);
+			pst.setString(1, account.getUsername());
+			pst.setString(2, account.getPassword());
+			pst.setString(3, account.getRealName());
+			pst.setString(4, account.getPhone());
+			pst.setString(5, account.getCity());
+			pst.setString(6, account.getAddress());
+			pst.setString(7, account.getAccountType().name());
+			pst.setInt(8, id);
+			pst.executeUpdate();
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public List<Account> getAllAccounts(AccountType type){
 		List<Account> list = new ArrayList<>();
-		String sqlCommand = "select * from account where account.accountType = 'CUSTOMER' order by username;";
+		String sqlCommand =
+				"select * from account where account.accountType = '" +
+				type.name() +
+				"' order by username;";
 		PreparedStatement pst ; 
 		ResultSet rs = null ; 
 		conn = dbconnector.createConnection();

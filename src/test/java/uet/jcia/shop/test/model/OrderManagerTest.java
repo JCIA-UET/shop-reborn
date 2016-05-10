@@ -50,7 +50,7 @@ public class OrderManagerTest {
 //		int re=orM.makeOrder(null, null, acc, e);
 //		System.out.println(re);
 		
-		System.out.println(orM.countItems());
+		System.out.println(orM.getTopCustomers(3));
 		
 		
 	}

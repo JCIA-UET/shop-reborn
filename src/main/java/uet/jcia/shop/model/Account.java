@@ -43,6 +43,13 @@ public class Account {
 	 * type of account
 	 */
 	private AccountType accountType;
+	
+	private int numOfOrders;
+	
+	public Account(int id, int numOrders) {
+		this.id = id;
+		this.numOfOrders = numOrders;
+	}
 
 	public Account(int id, String username, String password, String realName, String phone, String city, String address,
 			AccountType accountType) {
@@ -130,6 +137,21 @@ public class Account {
 
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
+	}
+	
+	public int getNumOfOrders() {
+		return numOfOrders;
+	}
+	
+	public void setNumOfOrders(int numOfOrders) {
+		this.numOfOrders = numOfOrders;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", realName=" + realName
+				+ ", phone=" + phone + ", city=" + city + ", address=" + address + ", accountType=" + accountType
+				+ ", numOfOrders=" + numOfOrders + "]";
 	}
 	
 }

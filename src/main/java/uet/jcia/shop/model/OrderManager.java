@@ -611,6 +611,34 @@ public class OrderManager implements ItemManager {
 			
 		}
 	}
+	
+	public List<Account> getTopCustomers(int n) {
+		conn = dbConnector.createConnection();
+		List<Account> customers = new ArrayList<>();
+		try {
+			PreparedStatement stt = conn.prepareStatement(
+					"select accountid, count(orderId)"
+					+ " from `order`"
+					+ " group by accountid limit ?");
+			stt.setInt(1, n);
+			
+			ResultSet rs = stt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				int numOfOrders = rs.getInt(2); 
+				Account c = new Account(id, numOfOrders);
+				customers.add(c);
+			}
+
+			conn.close();
+			return customers;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+			
+		}
+	}
 
 }
 
