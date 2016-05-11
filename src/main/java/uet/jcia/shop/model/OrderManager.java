@@ -24,9 +24,9 @@ public class OrderManager implements ItemManager {
 	private final String ADD_NEW_ORDER_QUERY	 			= "INSERT INTO `order` (accountId, receivedAddress, date, total, note, status) VALUES(?,?,?,?,?,?)";
 	private final String ADD_NEW_ORDERDETAIL_QUERY			= "INSERT INTO orderdetail (orderId, productId, quantity) VALUES (?,?,?)";
 	private final String GET_TOP_SELLING_PRODUCT_QUERY 		= "SELECT product.productID, SUM(orderdetail.Quantity) AS Quantity FROM orderdetail INNER JOIN product ON product.productID = orderdetail.productID GROUP BY orderdetail.productID ORDER BY Quantity DESC LIMIT ?";
-	private final String GET_REVENUE_IN_DAY_QUERY 			= "SELECT DATE(orderDate) AS Date, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate)=? GROUP BY orderId, orderdetail.productID";
-	private final String GET_REVENUE_IN_MONTH_QUERY			= "SELECT MONTH(DATE(orderDate)) as Month, orderdetail.quantity, SUM(orderdetail.quantity * product.price) AS Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID WHERE DATE(orderDate) BETWEEN ? AND ? GROUP BY orderId, orderdetail.productID";
-	private final String GET_TOTAL_REVENUE_QUERY			= "SELECT orderdetail.quantity, SUM(orderdetail.quantity * product.price) as Revenue FROM orderdetail LEFT JOIN product ON product.productID = orderdetail.productID GROUP BY orderId, orderdetail.productID";
+	private final String GET_REVENUE_IN_DAY_QUERY 			= "SELECT Date(o.`date`) as `date`, p.name, od.quantity, SUM(od.quantity * p.price) AS revenue FROM `order` AS o INNER JOIN orderdetail AS od ON o.orderId = od.orderId INNER JOIN product AS p ON od.productId = p.productId WHERE DATE(o.`date`)=? group by orderDetailId";
+	private final String GET_REVENUE_IN_MONTH_QUERY			= "SELECT Month(Date(o.`date`)) as `month`, p.name, od.quantity, SUM(od.quantity * p.price) AS revenue FROM `order` AS o INNER JOIN orderdetail AS od ON o.orderId = od.orderId INNER JOIN product AS p ON od.productId = p.productId WHERE DATE(o.`date`) BETWEEN ? AND ? group by orderDetailId";
+	private final String GET_TOTAL_REVENUE_QUERY			= "SELECT Month(Date(o.`date`)) as `month`, p.name, od.quantity, SUM(od.quantity * p.price) AS revenue FROM `order` AS o INNER JOIN orderdetail AS od ON o.orderId = od.orderId INNER JOIN product AS p ON od.productId = p.productId group by orderDetailId";
 	private final String GET_LAST_ORDER_QUERY 				= "SELECT * FROM `order` ORDER BY orderID DESC LIMIT 1";
 	private final String DELETE_ORDER_DETAIL_BY_ORDER_ID	= "DELETE FROM orderDetail WHERE orderId=?";
 	/**
@@ -505,7 +505,7 @@ public class OrderManager implements ItemManager {
 			ResultSet rs = stt.executeQuery();
 			while(rs.next()) {
 				arr[0]++;
-				arr[1] += (double)rs.getInt("quantity");
+				arr[1] += (double) rs.getInt("quantity");
 				arr[2] += rs.getInt("Revenue");
 			}
 			return arr;

@@ -15,8 +15,8 @@ function mr(cb) {
 	document.getElementById("tr").checked = false;
 	console.log("mr checked");
 	
-	document.getElementById("day-selector").style.display = "";
-	document.getElementById("month-selector").style.display = "none";
+	document.getElementById("day-selector").style.display = "none";
+	document.getElementById("month-selector").style.display = "";
 	document.getElementById("year-selector").style.display = "";
 }
 
@@ -50,21 +50,6 @@ function setType() {
 	
 	var value = objType.options[objType.selectedIndex].value;
 	
-	if(document.getElementById("dr").checked == true) {
-		objDay.style.display = "";
-		objMonth.style.display = "";
-		objYear.style.display = "";
-	}
-	else if(document.getElementById("mr").checked == true) {
-		objDay.style.display = "none";
-		objMonth.style.display = "";
-		objYear.style.display = "";
-	}
-	else if(document.getElementById("tr").checked == true) {
-		objDay.style.display = "none";
-		objMonth.style.display = "none";
-		objYear.style.display = "none";
-	}
 }
 
 function setDayList(objYear, objMonth, objDay) {
@@ -103,17 +88,18 @@ function setDayList(objYear, objMonth, objDay) {
         }	
     }
 }
- 
+
 window.onload = function() {
 	document.getElementById('cal').onsubmit = function() {
-		var checkedValue = function(){
-			var cdr = document.getElementById("dr");
-			var cmr = document.getElementById("mr");
-			var ctr = document.getElementById("tr");
-			if(cdr.checked == true) return oCheckBoxCdr.value;
-			else if(cmr.checked == true) return oCheckBoxCmr.value;
-			else if(ctr.checked == true) return oCheckBoxCtr.value;
-		};
+		var checkedValue;
+		
+		var cdr = document.getElementById("dr");
+		var cmr = document.getElementById("mr");
+		var ctr = document.getElementById("tr");
+		if(cdr.checked == true) checkedValue = cdr.value;
+		else if(cmr.checked == true) checkedValue =  cmr.value;
+		else if(ctr.checked == true) checkedValue =  ctr.value;
+		
 		console.log(checkedValue);
 		var input = document.getElementById('action');
 		input.value = checkedValue;

@@ -44,32 +44,32 @@ public class StatistService extends HttpServlet {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		
-		if(account == null || (account != null && account.getAccountType() != AccountType.EMPLOYEE)) {
+		if(action.equalsIgnoreCase("undefined")) {
+			request.setAttribute("action", action);
+			forwardStream(request, response, "/admin/statist-sale.jsp");
+		}
+		
+		else if(account == null || (account != null && account.getAccountType() != AccountType.EMPLOYEE)) {
 			message = "You do not have permission.";
 			request.setAttribute("message", message);
 			destination = "/admin/error.jsp";
 			forwardStream(request, response, destination);
 			return;
 		}
-	
-		// gts = get top selling
-		else if(action.equalsIgnoreCase("gts")){
-			int number = Integer.parseInt(numberString);
-			List<Item> list =  orderManager.getTopSellingProduct(number);
-			if(list == null) {
-				System.out.println("null");
-				return;
-			}
-			request.setAttribute("listTop", list);
-			destination = "/admin/statist-product.jsp";
-			forwardStream(request, response, destination);
-		}
+		
+		
+		
 		// Calculate Daily Revenue
 		else if(action.equalsIgnoreCase("cdr")) {
 			
 			String szDay = (String)request.getParameter("day");
 			String szMonth = (String)request.getParameter("month");
 			String szYear = (String)request.getParameter("year");
+			
+			System.out.println(action);
+			System.out.println(szDay);
+			System.out.println(szMonth);
+			System.out.println(szYear);
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String szDate = String.format(szYear + "-" + szMonth + "-" + szDay);
@@ -78,9 +78,14 @@ public class StatistService extends HttpServlet {
 				date = sdf.parse(szDate);
 				arr = orderManager.calDailyRevenue(date);
 				request.setAttribute("action", action);
-				request.setAttribute("gettopselling", false);
-				request.setAttribute("result", arr);
-				forwardStream(request, response, "/admin/statist-sale.jsp");
+				
+				if(arr[0] == 0 && arr[1] == 0 && arr[2] == 0) {
+					forwardStream(request, response, "/admin/statist-sale.jsp");
+				}
+				else {
+					request.setAttribute("result", arr);
+					forwardStream(request, response, "/admin/statist-sale.jsp");
+				}
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				message = "Date format error";
@@ -93,20 +98,36 @@ public class StatistService extends HttpServlet {
 			String szMonth = request.getParameter("month");
 			String szYear = request.getParameter("year");
 			
+			System.out.println(action);
+			System.out.println(szMonth);
+			System.out.println(szYear);
+			
 			// Convert String to Int
 			int month = Integer.parseInt(szMonth);
-			
 			arr = orderManager.calMonthRevenue(month);
 			request.setAttribute("action", action);
-			request.setAttribute("result", arr);
-			forwardStream(request, response, "/admin/error.jsp");
+			
+			if(arr[0] == 0 && arr[1] == 0 && arr[2] == 0) {
+				forwardStream(request, response, "/admin/statist-sale.jsp");
+			}
+			else {
+				request.setAttribute("result", arr);
+				forwardStream(request, response, "/admin/statist-sale.jsp");
+			}
 		}
 		// Caculate total revenue
 		else if (action.equalsIgnoreCase("ctr")) {
+			System.out.println(action);
 			arr = orderManager.calTotalRevenue();
 			request.setAttribute("action", action);
-			request.setAttribute("result", arr);
-			forwardStream(request, response, "/admin/error.jsp");
+			
+			if(arr[0] == 0 && arr[1] == 0 && arr[2] == 0) {
+				forwardStream(request, response, "/admin/statist-sale.jsp");
+			}
+			else {	
+				request.setAttribute("result", arr);
+				forwardStream(request, response, "/admin/statist-sale.jsp");
+			}
 		}
 		
 		
@@ -114,38 +135,6 @@ public class StatistService extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		if (action == null) return ;
-		String destination = null ;
-		
-		// gts = get top selling
-		if(action.equalsIgnoreCase("gts")){
-			String numberString = request.getParameter("number");
-			int number = Integer.parseInt(numberString);
-			List<Item> list =  orderManager.getTopSellingProduct(number);
-			if(list == null) {
-				System.out.println("null");
-				return;
-			}
-			request.setAttribute("listTop", list);
-			destination = "/admin/statis-product.jsp";
-		}
-		// Get Top Customers
-		else if (action.equalsIgnoreCase("gtc")) {
-			String n = request.getParameter("threshold");
-			int threshold = Integer.parseInt(n);
-			List<Account> customers = orderManager.getTopCustomers(threshold);
-			for (int i = 0; i < customers.size(); i++) {
-				Account c = customers.get(i);
-				int id = c.getId();
-				Account temp = am.getAccountById(id);
-				c.setRealName(temp.getRealName());
-			}
-			
-			request.setAttribute("customers", customers);
-			destination = "/admin/top-customers.jsp";
-		}
-		
 	}
 	
 	private void forwardStream(HttpServletRequest req, HttpServletResponse rsp, String destination)

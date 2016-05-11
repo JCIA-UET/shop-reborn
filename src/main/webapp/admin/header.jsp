@@ -115,7 +115,7 @@
                                     <a href="statist-product.jsp">Product</a>
                                 </li>
                                 <li>
-                                    <a href="#">Sales</a>
+                                    <a href="statist-sale.jsp">Sales</a>
                                 </li>
                                 <li>
                                     <a href="StatisService?action=gtc&threshold=10">Customer</a>

@@ -23,6 +23,37 @@
 
 	<!-- content -->
 	<h1 class="page-header">Statist Sale</h1>
+	<div>
+		<c:if test="${result == null && action != null && action != 'undefined'}">
+			<div class="alert alert-danger">
+				Data not found.
+			</div>
+		</c:if>
+		<c:if test="${result == null && action != null && action == 'undefined'}">
+			<div class="alert alert-danger">
+				Please choose action first.
+			</div>
+		</c:if>
+		<c:if test="${result != null && action != null}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Number of orders</th>
+						<th>Number of products sold</th>
+						<th>Revenue</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>${result[0].intValue()}</td>
+						<td>${result[1].intValue()}</td>
+						<td>${result[2].intValue()}</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+		</c:if>
+	</div>
 	<div class="row">
 		<div class="items-collection">
 			<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
@@ -54,7 +85,7 @@
 	
 	<div>
 		<form action="StatistService" id="cal" method="post">
-			<input type="hidden" id="action" name="action" value="cdr">
+			<input type="hidden" id="action" name="action" value="">
 			<div id="month-selector">
 				<h3>Choose a month</h3>
 				<select class="form-control" id="month" name="month" onchange="setDay()" size="1">
@@ -119,22 +150,7 @@
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
-	<div>
-		<hr>
-		<c:if test="${action != null}">
-			<table border="1">
-				<tr>
-					<th>Number of orders</th>
-					<th>Number of products sold</th>
-					<th>Revenue</th>
-				</tr>
-				<tr>
-					<td>${result[0].intValue()}</td>
-					<td>${result[1].intValue()}</td>
-					<td>${result[2].intValue()}</td>
-				</tr>
-			</table>
-		</c:if>
+	
 	<!-- footer -->
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
